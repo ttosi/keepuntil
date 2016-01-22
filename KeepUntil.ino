@@ -8,7 +8,7 @@
 #define SET_RTC false
 #define SHOW_TIME false
 
-//test change test
+//test change test 2
 
 const byte LOCK_SERVO_PIN = 4;
 const byte LOCK_OPEN = 130;
