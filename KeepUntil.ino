@@ -8,8 +8,6 @@
 #define SET_RTC false
 #define SHOW_TIME false
 
-//test change test 2
-
 const byte LOCK_SERVO_PIN = 4;
 const byte LOCK_OPEN = 130;
 const byte LOCK_CLOSED = 90;
@@ -93,8 +91,8 @@ void loop()
 	{
 		if (isOpen)
 		{
-			lcdSerial.write(21);
 			lcdSerial.write(18);
+			lcdSerial.write(21);
 
 			lockControl("closed");
 		}
@@ -129,15 +127,11 @@ void setOpenAtTime()
 
 	if (DEBUG) Serial.println(rtc.getUnixTime(t));
 
-	lcdSerial.print(String(t.mon));
-	lcdSerial.write("/");
-	lcdSerial.print(String(t.date));
-	lcdSerial.write("/");
-	lcdSerial.print(String(t.year));
-	lcdSerial.write(" ");
-	lcdSerial.print(String(t.hour));
-	lcdSerial.write(":");
-	lcdSerial.println(String(t.min));
+	lcdSerial.print(String(t.mon) + "/" +
+		String(t.date) + "/" + 
+		String(t.year) + " " + 
+		String(t.hour) + ":" + 
+		String(t.min));
 
 	lcdSerial.write(13);
 	lcdSerial.write("1-Yes, 2-No");
@@ -170,17 +164,12 @@ int getInput(String label, String defaultValue)
 	delay(50);
 
 	char input[5];
-	byte pos = 0;
+	byte pos = defaultValue.length();
 
 	defaultValue.toCharArray(input, defaultValue.length() + 1);
 
 	lcdSerial.print(label);
 	lcdSerial.print(defaultValue);
-
-	for (byte i = 0; i < defaultValue.length(); i++)
-	{
-		lcdSerial.write(8);
-	}
 
 	while (true)
 	{
