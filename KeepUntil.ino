@@ -14,8 +14,8 @@ const byte LOCK_CLOSED = 90;
 
 const byte LOCKING_SOLENOID_PIN = 3;
 
-const byte IS_OPEN_ADDRESS = 0;
-const byte OPEN_AT_TIME_ADDRESS = 1;
+const byte IS_OPEN_ADDRESS = 0;			//eeprom address to store the lock state
+const byte OPEN_AT_TIME_ADDRESS = 1;	//eeprom address to store the open at time
 
 const byte KEYPAD_ROWS = 4;
 const byte KEYPAD_COLS = 4;
