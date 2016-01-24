@@ -4,7 +4,7 @@
 #include <DS3231.h>
 #include <SoftwareSerial.h>
 
-#define DEBUG false
+#define DEBUG true
 #define SET_RTC false
 #define SHOW_TIME false
 
@@ -112,7 +112,8 @@ void setOpenAtTime()
 	lcdSerial.write(17);
 	delay(5);
 
-	Time now = rtc.getTime();
+	Time now;
+	now = rtc.getTime();
 
 	Time t;
 	t.mon = getInput("Month: ", String(now.mon));
@@ -128,9 +129,9 @@ void setOpenAtTime()
 	if (DEBUG) Serial.println(rtc.getUnixTime(t));
 
 	lcdSerial.print(String(t.mon) + "/" +
-		String(t.date) + "/" + 
-		String(t.year) + " " + 
-		String(t.hour) + ":" + 
+		String(t.date) + "/" +
+		String(t.year) + " " +
+		String(t.hour) + ":" +
 		String(t.min));
 
 	lcdSerial.write(13);
@@ -216,6 +217,14 @@ void lockControl(String position)
 
 		digitalWrite(LOCKING_SOLENOID_PIN, LOW);
 
+		byte servoPos = lockServo.read();
+		if (servoPos != LOCK_CLOSED)
+		{
+			lockControl("closed");
+		}
+
+		Serial.println("closed pos --> " + String(servoPos));
+
 		EEPROM.write(IS_OPEN_ADDRESS, 0);
 		isOpen = false;
 	}
@@ -231,6 +240,12 @@ void lockControl(String position)
 		delay(500);
 
 		digitalWrite(LOCKING_SOLENOID_PIN, LOW);
+
+		byte servoPos = lockServo.read();
+		if (servoPos != LOCK_OPEN)
+		{
+			lockControl("open");
+		}
 
 		EEPROM.write(IS_OPEN_ADDRESS, 1);
 		isOpen = true;
