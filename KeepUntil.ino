@@ -129,9 +129,9 @@ void setOpenAtTime()
 	if (DEBUG) Serial.println(rtc.getUnixTime(t));
 
 	lcdSerial.print(String(t.mon) + "/" +
-		String(t.date) + "/" + 
-		String(t.year) + " " + 
-		String(t.hour) + ":" + 
+		String(t.date) + "/" +
+		String(t.year) + " " +
+		String(t.hour) + ":" +
 		String(t.min));
 
 	lcdSerial.write(13);
