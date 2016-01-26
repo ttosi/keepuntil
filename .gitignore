@@ -23,6 +23,10 @@ bld/
 [Oo]bj/
 __vm/
 
+# Visual studio project stuff
+KeepUntil.sln
+KeepUntil.vcxproj
+KeepUntil.vcxproj.filters
 
 # Visual Studio 2015 cache/options directory
 .vs/
