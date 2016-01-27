@@ -10037,7 +10037,10 @@ Source: www.kingbright.com</description>
 <plain>
 </plain>
 <instances>
-<instance part="Q1" gate="G$1" x="137.16" y="68.58" rot="R270"/>
+<instance part="Q1" gate="G$1" x="137.16" y="68.58" smashed="yes" rot="R270">
+<attribute name="NAME" x="140.97" y="73.66" size="1.778" layer="95" rot="R270"/>
+<attribute name="VALUE" x="129.54" y="58.42" size="1.778" layer="96"/>
+</instance>
 <instance part="U1" gate="A" x="180.34" y="86.36"/>
 <instance part="S1" gate="G$1" x="231.14" y="93.98" smashed="yes"/>
 <instance part="R1" gate="G$1" x="223.52" y="109.22" rot="R90"/>
@@ -10193,6 +10196,11 @@ Source: www.kingbright.com</description>
 <wire x1="50.8" y1="101.6" x2="43.18" y2="101.6" width="0.1524" layer="91"/>
 <pinref part="GND9" gate="G$1" pin="3.3V"/>
 <wire x1="43.18" y1="101.6" x2="43.18" y2="96.52" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="T1" gate="G$1" pin="E"/>
+<pinref part="GND2" gate="G$1" pin="3.3V"/>
+<wire x1="116.84" y1="35.56" x2="116.84" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="VCC" class="0">
