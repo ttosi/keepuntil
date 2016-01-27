@@ -27,6 +27,7 @@ __vm/
 eagle/keepuntil-v*/*.b#*
 eagle/keepuntil-v*/*.s#*
 eagle/keepuntil-v*/*.lck
+eagle/keepuntil-v*/eagle.pdf
 
 # Visual studio project stuff
 KeepUntil.sln
