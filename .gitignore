@@ -23,6 +23,11 @@ bld/
 [Oo]bj/
 __vm/
 
+# eagle
+eagle/keepuntil-v*/*.b#*
+eagle/keepuntil-v*/*.s#*
+eagle/keepuntil-v*/*.lck
+
 # Visual studio project stuff
 KeepUntil.sln
 KeepUntil.vcxproj
