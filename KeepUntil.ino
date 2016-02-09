@@ -3,6 +3,7 @@
 #include <Servo.h>
 #include <DS3231.h>
 #include <SoftwareSerial.h>
+#include <OneWireKeypad.h>
 
 #define DEBUG true
 #define SET_RTC false
@@ -143,7 +144,9 @@ void setOpenAtTime()
 	{
 		lcdSerial.write(12);
 		delay(5);
-		lcdSerial.write("You have 10 sec");
+		lcdSerial.write("You have ");
+		lcdSerial.write(waitToCloseLockDuration / 10);
+		lcdSerial.write(" sec");
 		lcdSerial.write(13);
 		lcdSerial.write("to close the lid");
 	}
