@@ -9847,7 +9847,7 @@ Source: www.kingbright.com</description>
 <parts>
 <part name="Q1" library="murata-filter" deviceset="CSTCR" device="" technology="6M00G53Z"/>
 <part name="U1" library="Ava" deviceset="ATMEGA328P-AU" device=""/>
-<part name="R1" library="resistor" deviceset="R-EU_" device="R0805" value="1K"/>
+<part name="R1" library="resistor" deviceset="R-EU_" device="R0805" value="10K"/>
 <part name="C2" library="resistor" deviceset="C-US" device="C1206" value="10uf"/>
 <part name="C4" library="resistor" deviceset="C-EU" device="C0805" value="0.1uF"/>
 <part name="C5" library="resistor" deviceset="C-EU" device="C0805" value="0.1uF"/>

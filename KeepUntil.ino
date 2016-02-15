@@ -1,9 +1,11 @@
+#include <LiquidCrystal.h>
 #include <EEPROM.h>
 #include <Keypad.h>
 #include <Servo.h>
 #include <DS3231.h>
 #include <SoftwareSerial.h>
 #include <OneWireKeypad.h>
+
 
 #define DEBUG true
 #define SET_RTC false
