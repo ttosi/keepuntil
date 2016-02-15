@@ -1950,6 +1950,43 @@ Source: http://www.cypressindustries.com/pdf/32005-201.pdf</description>
 </package>
 </packages>
 </library>
+<library name="SparkFun-Electromechanical">
+<description>&lt;h3&gt;SparkFun Electronics' preferred foot prints&lt;/h3&gt;
+In this library you'll find anything that moves- switches, relays, buttons, potentiometers. Also, anything that goes on a board but isn't electrical in nature- screws, standoffs, etc.&lt;br&gt;&lt;br&gt;
+We've spent an enormous amount of time creating and checking these footprints and parts, but it is the end user's responsibility to ensure correctness and suitablity for a given componet or application. If you enjoy using this library, please buy one of our products at www.sparkfun.com.
+&lt;br&gt;&lt;br&gt;
+&lt;b&gt;Licensing:&lt;/b&gt; Creative Commons ShareAlike 4.0 International - https://creativecommons.org/licenses/by-sa/4.0/ 
+&lt;br&gt;&lt;br&gt;
+You are welcome to use this library for commercial purposes. For attribution, we ask that when you begin to sell your device using our footprint, you email us with a link to the product being sold. We want bragging rights that we helped (in a very small part) to create your 8th world wonder. We would like the opportunity to feature your device on our homepage.</description>
+<packages>
+<package name="TACTILE-SWITCH-1101NE">
+<description>SparkFun SKU# COM-08229</description>
+<wire x1="-3" y1="1.1" x2="-3" y2="-1.1" width="0.127" layer="51"/>
+<wire x1="3" y1="1.1" x2="3" y2="-1.1" width="0.127" layer="51"/>
+<wire x1="-2.75" y1="1.75" x2="-3" y2="1.5" width="0.2032" layer="21" curve="90"/>
+<wire x1="-2.75" y1="1.75" x2="2.75" y2="1.75" width="0.2032" layer="21"/>
+<wire x1="2.75" y1="1.75" x2="3" y2="1.5" width="0.2032" layer="21" curve="-90"/>
+<wire x1="3" y1="-1.5" x2="2.75" y2="-1.75" width="0.2032" layer="21" curve="-90"/>
+<wire x1="2.75" y1="-1.75" x2="-2.75" y2="-1.75" width="0.2032" layer="21"/>
+<wire x1="-3" y1="-1.5" x2="-2.75" y2="-1.75" width="0.2032" layer="21" curve="90"/>
+<wire x1="-3" y1="-1.5" x2="-3" y2="-1.1" width="0.2032" layer="21"/>
+<wire x1="-3" y1="1.1" x2="-3" y2="1.5" width="0.2032" layer="21"/>
+<wire x1="3" y1="1.1" x2="3" y2="1.5" width="0.2032" layer="21"/>
+<wire x1="3" y1="-1.5" x2="3" y2="-1.1" width="0.2032" layer="21"/>
+<wire x1="-1.5" y1="0.75" x2="1.5" y2="0.75" width="0.2032" layer="21"/>
+<wire x1="1.5" y1="-0.75" x2="-1.5" y2="-0.75" width="0.2032" layer="21"/>
+<wire x1="-1.5" y1="-0.75" x2="-1.5" y2="0.75" width="0.2032" layer="21"/>
+<wire x1="1.5" y1="-0.75" x2="1.5" y2="0.75" width="0.2032" layer="21"/>
+<wire x1="-2" y1="0" x2="-1" y2="0" width="0.127" layer="51"/>
+<wire x1="-1" y1="0" x2="0.1" y2="0.5" width="0.127" layer="51"/>
+<wire x1="0.3" y1="0" x2="2" y2="0" width="0.127" layer="51"/>
+<smd name="1" x="-3.15" y="0" dx="2.3" dy="1.6" layer="1" rot="R180"/>
+<smd name="2" x="3.15" y="0" dx="2.3" dy="1.6" layer="1" rot="R180"/>
+<text x="-3" y="2" size="0.762" layer="25">&gt;NAME</text>
+<text x="-3" y="-2.7" size="0.762" layer="27">&gt;VALUE</text>
+</package>
+</packages>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -2185,6 +2222,9 @@ design rules under a new name.</description>
 <attribute name="MPN" value="" x="-43.18" y="7.62" size="1.778" layer="27" display="off"/>
 <attribute name="OC_NEWARK" value="unknown" x="-43.18" y="7.62" size="1.778" layer="27" display="off"/>
 </element>
+<element name="S1" library="SparkFun-Electromechanical" package="TACTILE-SWITCH-1101NE" value="SWITCH-MOMENTARY-2SMD-1101NE" x="-49.53" y="-3.81">
+<attribute name="PROD_ID" value="SWCH-00815" x="-49.53" y="-3.81" size="1.778" layer="27" display="off"/>
+</element>
 </elements>
 <signals>
 <signal name="N$1">
@@ -2201,6 +2241,8 @@ design rules under a new name.</description>
 <contactref element="U1" pad="29"/>
 <contactref element="R1" pad="1"/>
 <contactref element="ISP" pad="4"/>
+<contactref element="S1" pad="2"/>
+<wire x1="-24.5364" y1="13.1318" x2="-46.38" y2="-3.81" width="0" layer="19" extent="1-1"/>
 <wire x1="-29.21" y1="33.02" x2="-24.5364" y2="13.1318" width="0" layer="19" extent="1-1"/>
 <wire x1="-39.05" y1="46.99" x2="-29.21" y2="33.02" width="0" layer="19" extent="1-1"/>
 </signal>
@@ -2311,6 +2353,8 @@ design rules under a new name.</description>
 <contactref element="X1" pad="5"/>
 <contactref element="LOCK-CTRL" pad="5"/>
 <contactref element="SERIAL" pad="3"/>
+<contactref element="S1" pad="1"/>
+<wire x1="-40.18" y1="6.02" x2="-52.68" y2="-3.81" width="0" layer="19" extent="1-1"/>
 <wire x1="-28.3718" y1="8.4836" x2="-40.18" y2="6.02" width="0" layer="19" extent="1-1"/>
 <wire x1="-28.3718" y1="10.0838" x2="-28.3718" y2="8.4836" width="0" layer="19" extent="1-1"/>
 <wire x1="-19.8882" y1="9.2964" x2="-28.3718" y2="8.4836" width="0" layer="19" extent="1-1"/>
