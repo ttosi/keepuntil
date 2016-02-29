@@ -1,10 +1,10 @@
 #include <LiquidCrystal.h>
 #include <EEPROM.h>
-#include <Keypad.h>
+//#include <Keypad.h>
 #include <Servo.h>
 #include <DS3231.h>
 #include <SoftwareSerial.h>
-#include <OneWireKeypad.h>
+//#include <OneWireKeypad.h>
 
 
 #define DEBUG true
@@ -20,24 +20,24 @@ const byte LOCKING_SOLENOID_PIN = 3;
 const byte IS_OPEN_ADDRESS = 0;			//eeprom address to store the lock state
 const byte OPEN_AT_TIME_ADDRESS = 1;	//eeprom address to store the open at time
 
-const byte KEYPAD_ROWS = 4;
-const byte KEYPAD_COLS = 4;
+//const byte KEYPAD_ROWS = 4;
+//const byte KEYPAD_COLS = 4;
 
-const byte LCD_TX_PIN = 2;
+//const byte LCD_TX_PIN = 2;
 
-const byte CLOSED_LED = 7;
-const byte OPEN_LED = 8;
+//const byte CLOSED_LED = 7;
+//const byte OPEN_LED = 8;
 
-byte rowPins[KEYPAD_ROWS] = { 5, 6, 7, 8 };
-byte colPins[KEYPAD_COLS] = { 9, 10, 11, 12 };
+//byte rowPins[KEYPAD_ROWS] = { 5, 6, 7, 8 };
+//byte colPins[KEYPAD_COLS] = { 9, 10, 11, 12 };
 
-String validKeys = "1234567890DC";
-char keys[KEYPAD_ROWS][KEYPAD_COLS] = {
-	{ '1', '2', '3', 'A' },
-	{ '4', '5', '6', 'B' },
-	{ '7', '8', '9', 'C' },
-	{ '*', '0', '#', 'D' }
-};
+//String validKeys = "1234567890DC";
+//char keys[KEYPAD_ROWS][KEYPAD_COLS] = {
+//	{ '1', '2', '3', 'A' },
+//	{ '4', '5', '6', 'B' },
+//	{ '7', '8', '9', 'C' },
+//	{ '*', '0', '#', 'D' }
+//};
 
 long openAtTime = EEPROMReadlong(OPEN_AT_TIME_ADDRESS);
 bool isOpen = EEPROM.read(IS_OPEN_ADDRESS) == 1 ? true : false;
@@ -45,8 +45,9 @@ int waitToCloseLockDuration = 10 * 1000;
 
 DS3231 rtc(SDA, SCL);
 Servo lockServo;
-SoftwareSerial lcdSerial = SoftwareSerial(255, LCD_TX_PIN);
-Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, KEYPAD_ROWS, KEYPAD_COLS);
+
+//SoftwareSerial lcdSerial = SoftwareSerial(255, LCD_TX_PIN);
+//Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, KEYPAD_ROWS, KEYPAD_COLS);
 
 void setup()
 {
@@ -54,7 +55,7 @@ void setup()
 
 	rtc.begin();
 
-	EEPROM.write(IS_OPEN_ADDRESS, 0);
+	//EEPROM.write(IS_OPEN_ADDRESS, 0);
 
 	// day, month, year, 24 hour, minute, second
 	if (SET_RTC) setRtc(12, 1, 2016, 20, 42, 15);
@@ -68,11 +69,11 @@ void setup()
 		}
 	}
 
-	lcdSerial.begin(9600);
-	delay(100);
+	//lcdSerial.begin(9600);
+	//delay(100);
 
-	pinMode(OPEN_LED, OUTPUT);
-	pinMode(CLOSED_LED, OUTPUT);
+	//pinMode(OPEN_LED, OUTPUT);
+	//pinMode(CLOSED_LED, OUTPUT);
 	pinMode(LOCKING_SOLENOID_PIN, OUTPUT);
 
 	openAtTime = EEPROMReadlong(OPEN_AT_TIME_ADDRESS);
@@ -90,14 +91,14 @@ void loop()
 			lockControl("open");
 		}
 
-		setOpenAtTime();
+		//setOpenAtTime();
 	}
 	else
 	{
 		if (isOpen)
 		{
-			lcdSerial.write(18);
-			lcdSerial.write(21);
+			//lcdSerial.write(18);
+			//lcdSerial.write(21);
 
 			lockControl("closed");
 		}
@@ -108,6 +109,7 @@ void loop()
 	delay(1000);
 }
 
+/*
 void setOpenAtTime()
 {
 	lcdSerial.write(24);
@@ -165,7 +167,9 @@ void setOpenAtTime()
 
 	delay(waitToCloseLockDuration);
 }
+*/
 
+/*
 int getInput(String label, String defaultValue)
 {
 	lcdSerial.write(12);
@@ -208,6 +212,7 @@ int getInput(String label, String defaultValue)
 		}
 	}
 }
+*/
 
 void lockControl(String position)
 {
