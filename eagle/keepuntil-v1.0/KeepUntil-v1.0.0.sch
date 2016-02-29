@@ -7031,7 +7031,7 @@ Source: http://www.vishay.com/docs/10129/hpc0201a.pdf</description>
 <text x="-7.62" y="5.715" size="1.778" layer="95" ratio="10">&gt;NAME</text>
 <text x="-5.08" y="2.54" size="1.778" layer="96" ratio="10">&gt;VALUE</text>
 <pin name="VIN" x="-12.7" y="0" length="middle" direction="in"/>
-<pin name="VOUT" x="12.7" y="0" length="middle" direction="out" rot="R180"/>
+<pin name="VOUT" x="12.7" y="0" length="middle" direction="pwr" rot="R180"/>
 <pin name="GND" x="0" y="-12.7" length="middle" direction="pwr" rot="R90"/>
 </symbol>
 </symbols>
@@ -11006,6 +11006,11 @@ For boards designed to be plugged directly into a USB slot. If possible, ensure 
 </nets>
 </sheet>
 </sheets>
+<errors>
+<approved hash="202,1,162.56,106.68,U1,ADC6,,,,"/>
+<approved hash="202,1,162.56,104.14,U1,ADC7,,,,"/>
+<approved hash="202,1,162.56,99.06,U1,AREF,,,,"/>
+</errors>
 </schematic>
 </drawing>
 </eagle>
