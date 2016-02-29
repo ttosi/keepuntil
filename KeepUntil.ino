@@ -54,6 +54,8 @@ void setup()
 
 	rtc.begin();
 
+	EEPROM.write(IS_OPEN_ADDRESS, 0);
+
 	// day, month, year, 24 hour, minute, second
 	if (SET_RTC) setRtc(12, 1, 2016, 20, 42, 15);
 
