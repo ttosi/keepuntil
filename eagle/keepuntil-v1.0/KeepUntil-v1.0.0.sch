@@ -10743,10 +10743,6 @@ For boards designed to be plugged directly into a USB slot. If possible, ensure 
 </net>
 <net name="SOLENOID-SIG" class="0">
 <segment>
-<pinref part="U1" gate="A" pin="PD2"/>
-<wire x1="198.12" y1="91.44" x2="203.2" y2="91.44" width="0.1524" layer="91"/>
-</segment>
-<segment>
 <pinref part="R2" gate="G$1" pin="2"/>
 <wire x1="35.56" y1="48.26" x2="33.02" y2="48.26" width="0.1524" layer="91"/>
 <label x="33.02" y="48.26" size="1.27" layer="95" rot="MR0" xref="yes"/>
