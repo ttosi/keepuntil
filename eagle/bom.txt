@@ -1,0 +1,26 @@
+Partlist
+
+Exported from KeepUntil-v1.0.1.brd at 3/1/2016 11:22 PM
+
+EAGLE Version 7.5.0 Copyright (c) 1988-2015 CadSoft
+
+Assembly variant: 
+
+Part     Value                        Package               Library                    Position (mm)         Orientation
+
+C1       0.1uF                        C0805                 resistor                   (15.665 7.5)          R180
+C2       10uf                         C1206                 resistor                   (20.67 14.415)        R180
+C4       0.1uF                        C0805                 resistor                   (15.59 14.415)        R180
+IC2      REG1117                      SOT223                burr-brown                 (9.24 10.875)         R180
+ISP                                   2X03                  pinhead                    (5.93 29.655)         R270
+J1       USB-MICROB                   USB-MICROB            SparkFun-Connectors        (16 2.255)            R0
+JP1                                   2X07                  pinhead                    (19.13 30.925)        R180
+LED1                                  1206                  led                        (20.67 10.605)        R0
+Q1       CSTCR6M00G53Z                CSTCR6M               murata-filter              (11.26 22.035)        R270
+R1       10K                          R0805                 resistor                   (8.525 17.565)        R270
+R2       10K                          R0805                 resistor                   (4.84 17.565)         R270
+R7       330                          R0805                 resistor                   (15.59 10.605)        R180
+S1       SWITCH-MOMENTARY-2SMD-1101NE TACTILE-SWITCH-1101NE SparkFun-Electromechanical (24.84 4.935)         R270
+SERIAL                                1X06                  pinhead                    (25.75 19.495)        R270
+T1       BC846                        SOT23                 transistor                 (5.43 23.035)         R0
+U1       ATMEGA328P-AU                QFP80P900X900X120-32N Ava                        (18.13 22.035)        R0
