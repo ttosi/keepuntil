@@ -1913,13 +1913,13 @@ Please make sure your boards conform to these design rules.</description>
 </autorouter>
 <elements>
 <element name="C1" library="resistor" package="C0805" value=".1uF" x="23.69" y="16.98" smashed="yes" rot="R90">
-<attribute name="VALUE" x="25.27" y="18.45" size="1.016" layer="27" font="vector" rot="R270"/>
+<attribute name="VALUE" x="25.27" y="18.45" size="1.016" layer="21" font="vector" rot="R270"/>
 </element>
 <element name="C2" library="resistor" package="C1206" value="10uf" x="23.69" y="11.89" smashed="yes" rot="R90">
-<attribute name="VALUE" x="26.23" y="10.37" size="1.016" layer="27" font="vector" rot="R90"/>
+<attribute name="VALUE" x="26.23" y="10.37" size="1.016" layer="21" font="vector" rot="R90"/>
 </element>
 <element name="C4" library="resistor" package="C0805" value=".1uF" x="12.44" y="11.89" smashed="yes" rot="R90">
-<attribute name="VALUE" x="14.73" y="10.62" size="1.016" layer="27" font="vector" rot="R90"/>
+<attribute name="VALUE" x="14.73" y="10.62" size="1.016" layer="21" font="vector" rot="R90"/>
 </element>
 <element name="IC2" library="burr-brown" package="SOT223" value="REG1117" x="18.87" y="14.4" smashed="yes" rot="R180">
 <attribute name="MF" value="" x="18.87" y="14.4" size="1.778" layer="27" rot="R180" display="off"/>
@@ -1940,13 +1940,13 @@ Please make sure your boards conform to these design rules.</description>
 <attribute name="MPN" value="CSTCR6M00G53-R0" x="11.94" y="24.56" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="R1" library="resistor" package="R0805" value="10K" x="9.51" y="11.89" smashed="yes" rot="R90">
-<attribute name="VALUE" x="8.05" y="10.755" size="1.016" layer="27" font="vector" rot="R90"/>
+<attribute name="VALUE" x="8.05" y="10.755" size="1.016" layer="21" font="vector" rot="R90"/>
 </element>
 <element name="R2" library="resistor" package="R0805" value="10K" x="19.94" y="32.34" smashed="yes" rot="R180">
-<attribute name="VALUE" x="17.325" y="32.88" size="1.016" layer="27" font="vector" rot="R180"/>
+<attribute name="VALUE" x="21.075" y="34.63" size="1.016" layer="21" font="vector" rot="R180"/>
 </element>
 <element name="R7" library="resistor" package="R0805" value="330" x="12.44" y="16.98" smashed="yes" rot="R90">
-<attribute name="VALUE" x="14.73" y="15.595" size="1.016" layer="27" font="vector" rot="R90"/>
+<attribute name="VALUE" x="14.73" y="15.595" size="1.016" layer="21" font="vector" rot="R90"/>
 </element>
 <element name="S1" library="SparkFun-Electromechanical" package="TACTILE-SWITCH-1101NE" value="SWITCH-MOMENTARY-2SMD-1101NE" x="9.51" y="5.04" smashed="yes" rot="R90">
 <attribute name="PROD_ID" value="SWCH-00815" x="9.51" y="5.04" size="1.778" layer="27" rot="R90" display="off"/>
