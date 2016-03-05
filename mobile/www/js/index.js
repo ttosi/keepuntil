@@ -32,6 +32,11 @@ var app = {
 		// check to see if Bluetooth is turned on.
 		// this function is called only
 		//if isEnabled(), below, returns success:
+
+		console.alert('ready');
+
+		alert(device.cordova);
+
 		var listPorts = function () {
 			// list the available BT ports:
 			bluetoothSerial.list(
