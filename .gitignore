@@ -29,7 +29,12 @@ eagle/keepuntil-v*/*.s#*
 eagle/keepuntil-v*/*.lck
 eagle/keepuntil-v*/agle.epf
 
-# Visual studio project stuff
+# phonegap
+mobile/hooks
+mobile/platforms
+mobile/plugins
+
+# Visual Studio
 KeepUntil.sln
 KeepUntil.vcxproj
 KeepUntil.vcxproj.filters
