@@ -1,16 +1,17 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.turningdigital.keeppuntil" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.turningdigital.keepuntil" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
 	<name>KeepUntil Box</name>
 	<description>
-		Keep stuff locked away from yourself until later.
+		Keep stuff locked away from you or someone else until later.
 	</description>
 	<author email="ttosi519@gamail.com" href="http://turningdigital.com">
 		Tony Tosi
 	</author>
+	
 	<content src="index.html" />
 
 	<preference name="permissions" value="none" />
-	<preference name="orientation" value="default" />
+	<preference name="orientation" value="portrait" />
 	<preference name="target-device" value="universal" />
 	<preference name="fullscreen" value="true" />
 	<preference name="webviewbounce" value="true" />
@@ -33,7 +34,9 @@
 	<gap:plugin name="org.apache.cordova.splashscreen" />
 
 	<plugin name="com.megster.cordova.bluetoothserial" spec="0.3.3" source="pgb" />
-
+	<plugin name="cordova-plugin-whitelist" version="1" />
+	<plugin name="io.github.pwlin.cordova.plugins.pdialog" spec="1.0.2" source="pgb" />
+	
 	<icon src="icon.png" />
 
 	<icon gap:platform="android" gap:qualifier="ldpi" src="www/res/icon/android/icon-36-ldpi.png" />
@@ -61,10 +64,10 @@
 	<gap:splash gap:platform="ios" height="1024" src="www/res/screen/ios/screen-ipad-portrait.png" width="768" />
 	<gap:splash gap:platform="ios" height="768" src="www/res/screen/ios/screen-ipad-landscape.png" width="1024" />
 	<gap:splash gap:platform="winphone" src="www/res/screen/windows-phone/screen-portrait.jpg" />
-	<plugin name="cordova-plugin-whitelist" version="1" />
 
 	<access origin="*" />
-
+	<allow-navigation href="*" />
+	
 	<allow-intent href="http://*/*" />
 	<allow-intent href="https://*/*" />
 	<allow-intent href="tel:*" />

@@ -1,0 +1,39 @@
+﻿<div class="container">
+	<div class="row">
+		<div class="col-xs-12">
+			<h1>KeepUntil Box</h1>
+		</div>
+	</div>
+	<div class="row" data-bind="foreach: devices, visible: !isConnected()">
+		<div class="col-xs-6 ">
+			<div data-bind="text: name"></div>
+		</div>
+		<div class="col-xs-6">
+			<button class="btn btn-primary btn-lg" data-bind="click: $parent.connect">Connect</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+		</div>
+	</div>
+	<div data-bind="visible: isConnected">
+		<div class="row">
+			<div class="col-xs-6">
+				<button class="btn btn-primary btn-lg form-control" data-bind="click: ledOn">LED ON</button>
+			</div>
+			<div class="col-xs-6">
+				<button class="btn btn-primary btn-lg form-control" data-bind="click: ledOff">LED OFF</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<button class="btn btn-primary btn-lg form-control" data-bind="click: getTime">GET RTC TIME</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12" style="text-align: center">
+				<h4 data-bind="text: rtcTime"></h4>
+			</div>
+		</div>
+	</div>
+</div>

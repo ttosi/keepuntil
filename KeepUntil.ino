@@ -1,11 +1,7 @@
-#include <LiquidCrystal.h>
 #include <EEPROM.h>
-//#include <Keypad.h>
 #include <Servo.h>
 #include <DS3231.h>
 #include <SoftwareSerial.h>
-//#include <OneWireKeypad.h>
-
 
 #define DEBUG true
 #define SET_RTC false
@@ -20,38 +16,30 @@ const byte LOCKING_SOLENOID_PIN = 3;
 const byte IS_OPEN_ADDRESS = 0;			//eeprom address to store the lock state
 const byte OPEN_AT_TIME_ADDRESS = 1;	//eeprom address to store the open at time
 
-//const byte KEYPAD_ROWS = 4;
-//const byte KEYPAD_COLS = 4;
-
-//const byte LCD_TX_PIN = 2;
-
-//const byte CLOSED_LED = 7;
-//const byte OPEN_LED = 8;
-
-//byte rowPins[KEYPAD_ROWS] = { 5, 6, 7, 8 };
-//byte colPins[KEYPAD_COLS] = { 9, 10, 11, 12 };
-
-//String validKeys = "1234567890DC";
-//char keys[KEYPAD_ROWS][KEYPAD_COLS] = {
-//	{ '1', '2', '3', 'A' },
-//	{ '4', '5', '6', 'B' },
-//	{ '7', '8', '9', 'C' },
-//	{ '*', '0', '#', 'D' }
-//};
+const byte DEBUG_LED = 2;
 
 long openAtTime = EEPROMReadlong(OPEN_AT_TIME_ADDRESS);
 bool isOpen = EEPROM.read(IS_OPEN_ADDRESS) == 1 ? true : false;
 int waitToCloseLockDuration = 10 * 1000;
 
+SoftwareSerial bluetoothSerial(3, 4); //RX, TX
 DS3231 rtc(SDA, SCL);
 Servo lockServo;
 
-//SoftwareSerial lcdSerial = SoftwareSerial(255, LCD_TX_PIN);
-//Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, KEYPAD_ROWS, KEYPAD_COLS);
-
 void setup()
 {
-	if (DEBUG) Serial.begin(115200);
+	pinMode(DEBUG_LED, OUTPUT);
+
+	if (DEBUG)
+	{
+		Serial.begin(9600);
+	}
+
+	bluetoothSerial.begin(9600);
+	while (!bluetoothSerial)
+	{
+		delay(50);
+	}
 
 	rtc.begin();
 
@@ -69,44 +57,64 @@ void setup()
 		}
 	}
 
-	//lcdSerial.begin(9600);
-	//delay(100);
-
-	//pinMode(OPEN_LED, OUTPUT);
-	//pinMode(CLOSED_LED, OUTPUT);
-	pinMode(LOCKING_SOLENOID_PIN, OUTPUT);
+	/*pinMode(LOCKING_SOLENOID_PIN, OUTPUT);
 
 	openAtTime = EEPROMReadlong(OPEN_AT_TIME_ADDRESS);
 	isOpen = EEPROM.read(IS_OPEN_ADDRESS) == 1 ? true : false;
 
-	if (DEBUG) printDebugInfo();
+	if (DEBUG) printDebugInfo();*/
 }
 
 void loop()
 {
-	if (openAtTime <= getRtcTime())
+	if (bluetoothSerial.available())
 	{
-		if (!isOpen)
+		String buffer = bluetoothSerial.readString();
+
+		Serial.println(buffer);
+		//bluetoothSerial.println(buffer);
+
+		if (buffer == "on")
 		{
-			lockControl("open");
+			digitalWrite(DEBUG_LED, HIGH);
+			bluetoothSerial.println('ON');
 		}
 
-		//setOpenAtTime();
-	}
-	else
-	{
-		if (isOpen)
+		if (buffer == "off")
 		{
-			//lcdSerial.write(18);
-			//lcdSerial.write(21);
+			digitalWrite(DEBUG_LED, LOW);
+			bluetoothSerial.println('OFF');
+		}
 
-			lockControl("closed");
+		if (buffer == "gettime")
+		{
+			bluetoothSerial.println("time|" + getTimeString());
 		}
 	}
+	
+	//if (openAtTime <= getRtcTime())
+	//{
+	//	if (!isOpen)
+	//	{
+	//		lockControl("open");
+	//	}
 
-	if (DEBUG) printDebugInfo();
+	//	//setOpenAtTime();
+	//}
+	//else
+	//{
+	//	if (isOpen)
+	//	{
+	//		//lcdSerial.write(18);
+	//		//lcdSerial.write(21);
 
-	delay(1000);
+	//		lockControl("closed");
+	//	}
+	//}
+
+	//if (DEBUG) printDebugInfo();
+
+	//delay(1000);
 }
 
 /*
@@ -281,6 +289,17 @@ void printTimeString()
 	Serial.print(rtc.getDateStr());
 	Serial.print(" ");
 	Serial.println(rtc.getTimeStr());
+}
+
+String getTimeString()
+{
+	String time;
+	
+	time += rtc.getDateStr();
+	time += " ";
+	time += rtc.getTimeStr();
+
+	return time;
 }
 
 void printDebugInfo()

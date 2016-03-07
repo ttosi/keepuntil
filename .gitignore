@@ -30,9 +30,9 @@ eagle/keepuntil-v*/*.lck
 eagle/keepuntil-v*/agle.epf
 
 # phonegap
-mobile/hooks
-mobile/platforms
-mobile/plugins
+mobile/hooks/
+mobile/platforms/
+mobile/plugins/
 
 # Visual Studio
 KeepUntil.sln
