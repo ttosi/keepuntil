@@ -72,7 +72,6 @@ void loop()
 		String buffer = bluetoothSerial.readString();
 
 		Serial.println(buffer);
-		//bluetoothSerial.println(buffer);
 
 		if (buffer == "on")
 		{

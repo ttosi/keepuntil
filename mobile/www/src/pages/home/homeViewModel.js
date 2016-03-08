@@ -1,10 +1,11 @@
 ﻿define([
 	'knockout',
-	'lodash'],
-	function (ko, _) {
+	'lodash',
+	'services/utils'],
+	function (ko, _, utils) {
 		'use strict';
 
-		var viewModel = function (ko) {
+		var viewModel = function (ko, utils) {
 			var self = this;
 
 			self.devices = ko.observableArray();
@@ -24,13 +25,13 @@
 			self.listDevices();
 
 			self.connect = function () {
-				self.showWaitDialog('Connecting to your KeepUntil Box...');
+				utils.waitDialog.show('Connecting to your KeepUntil Box...');
 
 				bluetoothSerial.connect(
 						this.address,
 						function () {
 							self.isConnected(true);
-							self.dismissWaitDialog();
+							utils.waitDialog.show();
 
 							bluetoothSerial.subscribe('\n', function (data) {
 								var packet = data.split('|');
@@ -48,7 +49,7 @@
 						},
 
 						function (err) {
-							self.dismissWaitDialog();
+							utils.waitDialog.dismiss();
 							alert(err);
 						}
 					);
@@ -76,25 +77,11 @@
 			self.fail = function () {
 				alert('failed');
 			};
-
-			self.showWaitDialog = function (message) {
-				cordova.plugin.pDialog.init({
-					theme: 'HOLO_DARK',
-					progressStyle: 'SPINNER',
-					cancelable: false,
-					title: 'Please Wait...',
-					message: message
-				});
-			};
-
-			self.dismissWaitDialog = function () {
-				cordova.plugin.pDialog.dismiss();
-			};
 		};
 
 		return {
 			load: function () {
-				return new viewModel(ko);
+				return new viewModel(ko, utils);
 			}
 		};
 	});
