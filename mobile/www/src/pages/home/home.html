@@ -2,6 +2,11 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<h1>KeepUntil Box</h1>
+			<input id="openatdate" type="date" data-bind="value: openAtDate" style="visibility: hidden" />
+			<button data-bind="click: selectDate">Select Date</button>
+
+			<input id="openattime" type="time" data-bind="value: openAtTime" style="visibility: hidden" />
+			<button data-bind="click: selectTime">Select Time</button>
 		</div>
 	</div>
 	<div class="row" data-bind="foreach: devices, visible: !isConnected()">
