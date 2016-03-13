@@ -1,14 +1,19 @@
 require.config({
 	baseUrl: 'src/',
+	waitSeconds: 0,
 	paths: {
 		jquery: 'lib/jquery',
 		knockout: 'lib/knockout',
+		bootstrap: 'lib/bootstrap',
 		pager: 'lib/pager',
 		lodash: 'lib/lodash',
 		sugar: 'lib/sugar',
 		stringformat: 'lib/stringformat',
 		text: 'lib/require-text'
-	}
+	},
+	shim: {
+		'bootstrap': { deps: ['jquery'] }
+	},
 });
 
 var app = {
@@ -42,6 +47,8 @@ require([
 	'pager',
 	'lib/fastclick',
 	'pages/home/homeViewModel',
+	'components/header/header',
+	'bootstrap',
 	'lib/domReady!'],
 	function (ko, pager, fastclick, HomeViewModel) {
 		'use strict';

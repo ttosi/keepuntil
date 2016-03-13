@@ -2006,10 +2006,10 @@ Please make sure your boards conform to these design rules.</description>
 <element name="LOCK-CTRL" library="pinhead" package="2X03" value="" x="27.55" y="29.67" smashed="yes" rot="R270">
 <attribute name="VALUE" x="23.105" y="33.48" size="1.27" layer="27" rot="R270"/>
 </element>
-<element name="RTC1" library="adafruit" package="1X06-CLEAN" value="" x="6.75" y="27" smashed="yes" rot="R90">
+<element name="SERIAL" library="adafruit" package="1X06-CLEAN" value="" x="6.75" y="27" smashed="yes" rot="R90">
 <attribute name="VALUE" x="9.925" y="19.38" size="1.27" layer="27" rot="R90"/>
 </element>
-<element name="J1" library="SparkFun-Connectors" package="2X3-SHROUDED" value="" x="31.5" y="16.75" smashed="yes">
+<element name="ISP" library="SparkFun-Connectors" package="2X3-SHROUDED" value="" x="31.5" y="16.75" smashed="yes">
 <attribute name="PROD_ID" value="CONN-10681" x="31.5" y="16.75" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="28.579" y="24.624" size="0.4064" layer="27" font="vector"/>
 </element>
@@ -2038,7 +2038,7 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="R1" pad="1"/>
 <contactref element="S1" pad="2"/>
 <contactref element="C1" pad="1"/>
-<contactref element="J1" pad="4"/>
+<contactref element="ISP" pad="4"/>
 <wire x1="9.6012" y1="8.2296" x2="9.6012" y2="10.8204" width="0.1524" layer="1"/>
 <wire x1="9.6012" y1="10.8204" x2="9.51" y2="10.94" width="0.1524" layer="1"/>
 <wire x1="9.6012" y1="8.2296" x2="9.51" y2="8.19" width="0.1524" layer="1"/>
@@ -2088,7 +2088,7 @@ Please make sure your boards conform to these design rules.</description>
 </signal>
 <signal name="MISO">
 <contactref element="U1" pad="16"/>
-<contactref element="J1" pad="3"/>
+<contactref element="ISP" pad="3"/>
 <wire x1="25.2984" y1="21.6408" x2="21.7932" y2="21.6408" width="0.1524" layer="1"/>
 <wire x1="30.1752" y1="16.764" x2="25.2984" y2="21.6408" width="0.1524" layer="1"/>
 <wire x1="21.7932" y1="21.6408" x2="21.664" y2="21.6482" width="0.1524" layer="1"/>
@@ -2096,7 +2096,7 @@ Please make sure your boards conform to these design rules.</description>
 </signal>
 <signal name="MOSI">
 <contactref element="U1" pad="15"/>
-<contactref element="J1" pad="5"/>
+<contactref element="ISP" pad="5"/>
 <wire x1="20.8788" y1="19.9644" x2="20.8788" y2="21.6408" width="0.1524" layer="1"/>
 <wire x1="22.7076" y1="18.1356" x2="20.8788" y2="19.9644" width="0.1524" layer="1"/>
 <wire x1="22.7076" y1="17.0688" x2="22.7076" y2="18.1356" width="0.1524" layer="1"/>
@@ -2108,7 +2108,7 @@ Please make sure your boards conform to these design rules.</description>
 </signal>
 <signal name="SCK">
 <contactref element="U1" pad="17"/>
-<contactref element="J1" pad="1"/>
+<contactref element="ISP" pad="1"/>
 <wire x1="26.5176" y1="23.0124" x2="23.1648" y2="23.0124" width="0.1524" layer="1"/>
 <wire x1="30.1752" y1="19.3548" x2="26.5176" y2="23.0124" width="0.1524" layer="1"/>
 <wire x1="23.1648" y1="23.0124" x2="23.1118" y2="23.096" width="0.1524" layer="1"/>
@@ -2116,7 +2116,7 @@ Please make sure your boards conform to these design rules.</description>
 </signal>
 <signal name="TX">
 <contactref element="U1" pad="31"/>
-<contactref element="RTC1" pad="5"/>
+<contactref element="SERIAL" pad="5"/>
 <wire x1="16.764" y1="30.7848" x2="16.764" y2="30.1752" width="0.1524" layer="1"/>
 <wire x1="15.6972" y1="31.8516" x2="16.764" y2="30.7848" width="0.1524" layer="1"/>
 <wire x1="7.7724" y1="31.8516" x2="15.6972" y2="31.8516" width="0.1524" layer="1"/>
@@ -2126,7 +2126,7 @@ Please make sure your boards conform to these design rules.</description>
 </signal>
 <signal name="RX">
 <contactref element="U1" pad="30"/>
-<contactref element="RTC1" pad="4"/>
+<contactref element="SERIAL" pad="4"/>
 <wire x1="17.526" y1="30.9372" x2="17.526" y2="30.1752" width="0.1524" layer="1"/>
 <wire x1="16.4592" y1="32.004" x2="17.526" y2="30.9372" width="0.1524" layer="1"/>
 <wire x1="13.716" y1="29.2608" x2="16.4592" y2="32.004" width="0.1524" layer="16"/>
@@ -2177,8 +2177,8 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="LOCK-CTRL" pad="4"/>
 <contactref element="LOCK-CTRL" pad="6"/>
 <contactref element="BLUETOOTH" pad="1"/>
-<contactref element="RTC1" pad="3"/>
-<contactref element="J1" pad="2"/>
+<contactref element="SERIAL" pad="3"/>
+<contactref element="ISP" pad="2"/>
 <wire x1="23.622" y1="11.2776" x2="23.622" y2="10.5156" width="0.1524" layer="1"/>
 <wire x1="18.8976" y1="16.002" x2="23.622" y2="11.2776" width="0.1524" layer="1"/>
 <wire x1="18.8976" y1="17.526" x2="18.8976" y2="16.002" width="0.1524" layer="1"/>
@@ -2264,14 +2264,14 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="RTC" pad="1"/>
 <contactref element="LOCK-CTRL" pad="2"/>
 <contactref element="BLUETOOTH" pad="2"/>
-<contactref element="RTC1" pad="1"/>
+<contactref element="SERIAL" pad="1"/>
 <polygon width="0.4064" layer="16">
 <vertex x="0" y="0"/>
 <vertex x="37" y="0"/>
 <vertex x="37" y="45"/>
 <vertex x="0" y="45"/>
 </polygon>
-<contactref element="J1" pad="6"/>
+<contactref element="ISP" pad="6"/>
 <wire x1="12.4968" y1="14.3256" x2="12.4968" y2="12.954" width="0.1524" layer="1"/>
 <wire x1="13.5636" y1="15.3924" x2="12.4968" y2="14.3256" width="0.1524" layer="1"/>
 <wire x1="13.5636" y1="16.764" x2="13.5636" y2="15.3924" width="0.1524" layer="1"/>
@@ -2350,7 +2350,7 @@ Please make sure your boards conform to these design rules.</description>
 </signal>
 <signal name="N$17">
 <contactref element="C1" pad="2"/>
-<contactref element="RTC1" pad="6"/>
+<contactref element="SERIAL" pad="6"/>
 <wire x1="23.622" y1="21.0312" x2="23.622" y2="17.9832" width="0.1524" layer="1"/>
 <wire x1="23.622" y1="22.86" x2="23.622" y2="21.0312" width="0.1524" layer="16"/>
 <wire x1="17.0688" y1="29.4132" x2="23.622" y2="22.86" width="0.1524" layer="16"/>

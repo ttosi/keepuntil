@@ -10979,8 +10979,8 @@ Pogo pins- HW-11044</description>
 <part name="RTC" library="adafruit" deviceset="PINHD-1X6" device="CLEAN"/>
 <part name="BLUETOOTH" library="adafruit" deviceset="1X4" device="-CLEANBIG"/>
 <part name="LOCK-CTRL" library="pinhead" deviceset="PINHD-2X3" device=""/>
-<part name="RTC1" library="adafruit" deviceset="PINHD-1X6" device="CLEAN"/>
-<part name="J1" library="SparkFun-Connectors" deviceset="M03X2" device="SHROUD"/>
+<part name="SERIAL" library="adafruit" deviceset="PINHD-1X6" device="CLEAN"/>
+<part name="ISP" library="SparkFun-Connectors" deviceset="M03X2" device="SHROUD"/>
 </parts>
 <sheets>
 <sheet>
@@ -11029,8 +11029,8 @@ Pogo pins- HW-11044</description>
 <attribute name="NAME" x="40.64" y="60.96" size="1.27" layer="95" font="vector" rot="R180"/>
 </instance>
 <instance part="LOCK-CTRL" gate="A" x="73.66" y="50.8"/>
-<instance part="RTC1" gate="A" x="77.216" y="83.82" rot="R180"/>
-<instance part="J1" gate="G$1" x="40.894" y="84.836"/>
+<instance part="SERIAL" gate="A" x="77.216" y="83.82" rot="R180"/>
+<instance part="ISP" gate="G$1" x="40.894" y="84.836"/>
 </instances>
 <busses>
 </busses>
@@ -11070,7 +11070,7 @@ Pogo pins- HW-11044</description>
 <segment>
 <wire x1="44.196" y1="84.836" x2="48.514" y2="84.836" width="0.1524" layer="91"/>
 <label x="51.816" y="84.836" size="1.27" layer="95" xref="yes"/>
-<pinref part="J1" gate="G$1" pin="4"/>
+<pinref part="ISP" gate="G$1" pin="4"/>
 <wire x1="48.514" y1="84.836" x2="51.816" y2="84.836" width="0.1524" layer="91"/>
 <junction x="48.514" y="84.836"/>
 </segment>
@@ -11095,7 +11095,7 @@ Pogo pins- HW-11044</description>
 <segment>
 <wire x1="36.576" y1="84.836" x2="33.274" y2="84.836" width="0.1524" layer="91"/>
 <label x="28.956" y="84.836" size="1.27" layer="95" rot="R180" xref="yes"/>
-<pinref part="J1" gate="G$1" pin="3"/>
+<pinref part="ISP" gate="G$1" pin="3"/>
 <wire x1="33.274" y1="84.836" x2="28.956" y2="84.836" width="0.1524" layer="91"/>
 <junction x="33.274" y="84.836"/>
 </segment>
@@ -11109,7 +11109,7 @@ Pogo pins- HW-11044</description>
 <segment>
 <wire x1="36.576" y1="82.296" x2="33.274" y2="82.296" width="0.1524" layer="91"/>
 <label x="28.956" y="82.296" size="1.27" layer="95" rot="R180" xref="yes"/>
-<pinref part="J1" gate="G$1" pin="5"/>
+<pinref part="ISP" gate="G$1" pin="5"/>
 <wire x1="33.274" y1="82.296" x2="28.956" y2="82.296" width="0.1524" layer="91"/>
 <junction x="33.274" y="82.296"/>
 </segment>
@@ -11123,7 +11123,7 @@ Pogo pins- HW-11044</description>
 <segment>
 <wire x1="36.576" y1="87.376" x2="33.274" y2="87.376" width="0.1524" layer="91"/>
 <label x="28.956" y="87.376" size="1.27" layer="95" rot="MR0" xref="yes"/>
-<pinref part="J1" gate="G$1" pin="1"/>
+<pinref part="ISP" gate="G$1" pin="1"/>
 <wire x1="33.274" y1="87.376" x2="28.956" y2="87.376" width="0.1524" layer="91"/>
 <junction x="33.274" y="87.376"/>
 </segment>
@@ -11137,7 +11137,7 @@ Pogo pins- HW-11044</description>
 <segment>
 <wire x1="79.756" y1="86.36" x2="87.376" y2="86.36" width="0.1524" layer="91"/>
 <label x="87.376" y="86.36" size="1.27" layer="95" rot="MR180" xref="yes"/>
-<pinref part="RTC1" gate="A" pin="5"/>
+<pinref part="SERIAL" gate="A" pin="5"/>
 </segment>
 </net>
 <net name="RX" class="0">
@@ -11149,7 +11149,7 @@ Pogo pins- HW-11044</description>
 <segment>
 <wire x1="79.756" y1="83.82" x2="87.376" y2="83.82" width="0.1524" layer="91"/>
 <label x="87.376" y="83.82" size="1.27" layer="95" rot="MR180" xref="yes"/>
-<pinref part="RTC1" gate="A" pin="4"/>
+<pinref part="SERIAL" gate="A" pin="4"/>
 </segment>
 </net>
 <net name="N$3" class="0">
@@ -11196,7 +11196,7 @@ Pogo pins- HW-11044</description>
 <wire x1="48.514" y1="87.376" x2="51.816" y2="87.376" width="0.1524" layer="91"/>
 <wire x1="51.816" y1="87.376" x2="51.816" y2="92.456" width="0.1524" layer="91"/>
 <pinref part="P+6" gate="VCC" pin="VCC"/>
-<pinref part="J1" gate="G$1" pin="2"/>
+<pinref part="ISP" gate="G$1" pin="2"/>
 <junction x="48.514" y="87.376"/>
 </segment>
 <segment>
@@ -11215,7 +11215,7 @@ Pogo pins- HW-11044</description>
 <segment>
 <pinref part="P+5" gate="VCC" pin="VCC"/>
 <wire x1="79.756" y1="81.28" x2="97.536" y2="81.28" width="0.1524" layer="91"/>
-<pinref part="RTC1" gate="A" pin="3"/>
+<pinref part="SERIAL" gate="A" pin="3"/>
 </segment>
 <segment>
 <pinref part="RTC" gate="A" pin="2"/>
@@ -11280,7 +11280,7 @@ Pogo pins- HW-11044</description>
 <wire x1="48.514" y1="82.296" x2="51.816" y2="82.296" width="0.1524" layer="91"/>
 <wire x1="51.816" y1="82.296" x2="51.816" y2="77.216" width="0.1524" layer="91"/>
 <pinref part="GND7" gate="1" pin="GND"/>
-<pinref part="J1" gate="G$1" pin="6"/>
+<pinref part="ISP" gate="G$1" pin="6"/>
 <junction x="48.514" y="82.296"/>
 </segment>
 <segment>
@@ -11297,7 +11297,7 @@ Pogo pins- HW-11044</description>
 <pinref part="GND8" gate="1" pin="GND"/>
 <wire x1="79.756" y1="76.2" x2="89.916" y2="76.2" width="0.1524" layer="91"/>
 <wire x1="89.916" y1="76.2" x2="89.916" y2="71.12" width="0.1524" layer="91"/>
-<pinref part="RTC1" gate="A" pin="1"/>
+<pinref part="SERIAL" gate="A" pin="1"/>
 </segment>
 <segment>
 <pinref part="GND11" gate="1" pin="GND"/>
@@ -11336,7 +11336,7 @@ Pogo pins- HW-11044</description>
 <segment>
 <wire x1="79.756" y1="88.9" x2="92.456" y2="88.9" width="0.1524" layer="91"/>
 <pinref part="C1" gate="G$1" pin="2"/>
-<pinref part="RTC1" gate="A" pin="6"/>
+<pinref part="SERIAL" gate="A" pin="6"/>
 </segment>
 </net>
 <net name="SERVO" class="0">
