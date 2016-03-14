@@ -1,16 +1,32 @@
 ﻿define([
 	'knockout',
 	'lodash',
+	'services/bluetooth',
 	'services/utils'],
-	function (ko, _, utils) {
+	function (ko, _, bluetooth, utils) {
 		'use strict';
 
 		var viewModel = function (ko, utils) {
 			var self = this;
 
-			//self.devices = ko.observableArray();
+			self.isConnected = ko.observable(false);
 
-			//self.isConnected = ko.observable(false);
+			self.devices = ko.observableArray();
+
+			self.deviceStatus = ko.observable('NOTCONNECTED'); // NOTCONNECTED, CONNECTED, BLUETOOTHOFF, NOTFOUND
+
+			utils.waitDialog.show('Connecting to your KeepUntil Box...');
+			bluetooth.connect()
+				.done(function (device) {
+					console.log(device);
+				})
+				.fail(function (error) {
+					alert(error);
+				})
+				.always(function () {
+					utils.waitDialog.dismiss();
+				});
+
 
 			//self.command = ko.observable();
 
@@ -19,6 +35,65 @@
 			//self.openAtDate = ko.observable();
 
 			//self.openAtTime = ko.observable();
+
+
+
+			self.listDevices = function () {
+				//bluetoothSerial.list(function (devices) {
+				//	console.info(devices);
+				//	utils.waitDialog.show('Connecting to your KeepUntil Box...');
+
+				//	if (devices.length > 0) {
+				//		var keepuntil = _.find(devices, { name: 'keepuntil' });
+				//		if (keepuntil) {
+				//			self.connect(keepuntil.address);
+				//			return;
+				//		}
+				//	}
+
+				//	alert("KeepUntil box not found");
+				//});
+			};
+
+			//self.connect = function (address) {
+			//	bluetoothSerial.connect(
+		    //			address,
+		    //			function () {
+		    //				self.isConnected(true);
+		    //				utils.waitDialog.dismiss();
+
+		    //				bluetoothSerial.subscribe('\n', function (data) {
+		    //					var packet = data.split('|');
+		    //					var command = packet[0],
+		    //						payload = packet[1];
+
+		    //					switch (command) {
+		    //						case 'time':
+		    //							self.rtcTime(payload);
+		    //							break;
+		    //						default:
+		    //							break;
+		    //					}
+		    //				});
+		    //			},
+
+		    //			function (err) {
+		    //				utils.waitDialog.dismiss();
+		    //				alert(err);
+		    //			}
+		    //		);
+			//};
+
+			//self.listDevices();
+
+			self.getRTC = function () {
+
+			};
+
+			self.setRTC = function () {
+
+			};
+
 
 			//self.openAtDateChange = ko.computed(function () {
 			//	console.log(self.openAtDate());
@@ -36,13 +111,7 @@
 			//	$('#openattime').trigger('click');
 			//}
 
-			//self.listDevices = function () {
-			//	bluetoothSerial.list(function (results) {
-			//		self.devices(results);
 
-
-			//	});
-			//};
 
 			//var pickedDate;
 			//var pickedTime;
@@ -77,36 +146,7 @@
 
 			//self.listDevices();
 
-			//self.connect = function () {
-			//	utils.waitDialog.show('Connecting to your KeepUntil Box...');
 
-			//	bluetoothSerial.connect(
-			//			this.address,
-			//			function () {
-			//				self.isConnected(true);
-			//				utils.waitDialog.show();
-
-			//				bluetoothSerial.subscribe('\n', function (data) {
-			//					var packet = data.split('|');
-			//					var command = packet[0],
-			//						payload = packet[1];
-
-			//					switch (command) {
-			//						case 'time':
-			//							self.rtcTime(payload);
-			//							break;
-			//						default:
-			//							break;
-			//					}
-			//				});
-			//			},
-
-			//			function (err) {
-			//				utils.waitDialog.dismiss();
-			//				alert(err);
-			//			}
-			//		);
-			//};
 
 			//self.connectionError = function (err) {
 			//	alert(err);

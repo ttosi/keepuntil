@@ -35,7 +35,6 @@ mobile/platforms/
 mobile/plugins/
 
 # Visual Studio
-KeepUntil.sln
 KeepUntil.vcxproj
 KeepUntil.vcxproj.filters
 

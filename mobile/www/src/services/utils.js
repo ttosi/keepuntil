@@ -12,7 +12,7 @@
 					});
 				},
 
-				dimiss: function () {
+				dismiss: function () {
 					cordova.plugin.pDialog.dismiss();
 				}
 			}

@@ -1,2 +1,22 @@
-﻿body {
+﻿.box-status {
+	text-align: center;
+    padding: 25px;
 }
+
+.status-text {
+	font-size: 12pt;
+}
+
+.box-status-text {
+    font-size: 52pt;
+}
+
+
+
+.oat-container {
+    background-color: #bbb;
+    text-align: center;
+    padding: 35px;
+    font-weight: bold;
+}
+

@@ -1,52 +1,75 @@
-﻿<div class="container" style="margin-top: 75px;">
-	<div class="row">
+﻿<div class="container">
+	<!--<div class="row" data-bind="visible: !isConnected()">
 		<div class="col-xs-12">
-			<h2>KeepUntil Box</h2>
-			<!--<input id="openatdate" type="date" data-bind="value: openAtDate" style="visibility: hidden" />
-			<button data-bind="click: selectDate">Select Date</button>
-
-			<input id="openattime" type="time" data-bind="value: openAtTime" style="visibility: hidden" />
-			<button data-bind="click: selectTime">Select Time</button>-->
-		</div>
-	</div>
-	<<!--div class="row">
-		<div class="col-xs-6">
-			<button class="btn btn-primary waves-effect waves-ligh">SELECT DATE</button>
-		</div>
-		<div class="col-xs-6">
-			<button class="btn btn-primary waves-effect waves-ligh">SELECT TIME</button>
-		</div>
-	</div>
-	<div class="row" data-bind="foreach: devices, visible: !isConnected()">
-		<div class="col-xs-6 ">
-			<div data-bind="text: name"></div>
-		</div>
-		<div class="col-xs-6">
-			<button class="btn btn-primary btn-lg" data-bind="click: $parent.connect">Connect</button>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12">
-		</div>
-	</div>
-	<div data-bind="visible: isConnected">
-		<div class="row">
-			<div class="col-xs-6">
-				<button class="btn btn-primary btn-lg form-control" data-bind="click: ledOn">LED ON</button>
-			</div>
-			<div class="col-xs-6">
-				<button class="btn btn-primary btn-lg form-control" data-bind="click: ledOff">LED OFF</button>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-12">
-				<button class="btn btn-primary btn-lg form-control" data-bind="click: getTime">GET RTC TIME</button>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-12" style="text-align: center">
-				<h4 data-bind="text: rtcTime"></h4>
-			</div>
+			<button class="btn btn-primary btn-lg" data-bind="click: setOat">
+				SET OPEN AT TIME
+			</button>
 		</div>
 	</div>-->
+	<div class="row" data-bind="visible: isConnected()">
+		<div class="col-xs-12 box-status">
+			<div class="status-text">
+				YOUR KEEPUNTIL BOX IS
+			</div>
+			<div class="box-status-text" style="margin-top: 0;">
+				OPEN
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 oat-container">
+			<button class="btn btn-primary btn-lg" data-bind="click: setOat">
+				SET OPEN AT TIME
+			</button>
+		</div>
+	</div>
 </div>
+<!--<div class="col-xs-12">
+	<h2>KeepUntil Box</h2>-->
+<!--<input id="openatdate" type="date" data-bind="value: openAtDate" style="visibility: hidden" />
+<button data-bind="click: selectDate">Select Date</button>
+
+<input id="openattime" type="time" data-bind="value: openAtTime" style="visibility: hidden" />
+<button data-bind="click: selectTime">Select Time</button>-->
+<!--</div>
+</div>-->
+<!--div class="row">
+	<div class="col-xs-6">
+		<button class="btn btn-primary waves-effect waves-ligh">SELECT DATE</button>
+	</div>
+	<div class="col-xs-6">
+		<button class="btn btn-primary waves-effect waves-ligh">SELECT TIME</button>
+	</div>
+</div>
+<div class="row" data-bind="foreach: devices, visible: !isConnected()">
+	<div class="col-xs-6 ">
+		<div data-bind="text: name"></div>
+	</div>
+	<div class="col-xs-6">
+		<button class="btn btn-primary btn-lg" data-bind="click: $parent.connect">Connect</button>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+	</div>
+</div>
+<div data-bind="visible: isConnected">
+	<div class="row">
+		<div class="col-xs-6">
+			<button class="btn btn-primary btn-lg form-control" data-bind="click: ledOn">LED ON</button>
+		</div>
+		<div class="col-xs-6">
+			<button class="btn btn-primary btn-lg form-control" data-bind="click: ledOff">LED OFF</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<button class="btn btn-primary btn-lg form-control" data-bind="click: getTime">GET RTC TIME</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12" style="text-align: center">
+			<h4 data-bind="text: rtcTime"></h4>
+		</div>
+	</div>
+</div>-->

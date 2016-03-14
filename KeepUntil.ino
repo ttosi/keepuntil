@@ -67,6 +67,10 @@ void setup()
 
 void loop()
 {
+	bluetoothSerial.println("hello!!!");
+
+	while (1);
+	
 	if (bluetoothSerial.available())
 	{
 		String buffer = bluetoothSerial.readString();
