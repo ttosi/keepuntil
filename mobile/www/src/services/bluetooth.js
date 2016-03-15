@@ -3,7 +3,23 @@
 	'lodash'],
 	function ($, _) {
 		var _subscription = function (data) {
-			console.log(data);
+			var command = data.split('|')[0],
+				payload = data.split('|')[1].trim();
+
+			switch (command) {
+				case 'rtctime':
+					app.rtctime(payload);
+					break;
+				case 'oattime':
+					app.box.oattime(payload);
+					break;
+				case 'lockposition':
+					app.box.lockposition(payload);
+					break;
+				default:
+					console.log('Invalid command recieved: ' + command);
+					break;
+			}
 		};
 
 		return {
@@ -19,7 +35,6 @@
 						bluetoothSerial.connect(
 							keepuntil.address,
 							function () {
-								bluetoothSerial.subscribe('\n', _subscription);
 								deferred.resolve(true);
 							},
 							function (err) {
@@ -35,8 +50,8 @@
 				return deferred.promise();
 			},
 
-			getRtcTime: {
-
+			getRtcTime: function() {
+				bluetoothSerial.write('getrtctime');
 			},
 
 			setRtcTime: {

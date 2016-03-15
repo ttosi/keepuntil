@@ -53,7 +53,17 @@ require([
 	function (ko, pager, fastclick, HomeViewModel) {
 		'use strict';
 
+		app.box = {
+			oattime: ko.observable(),
+
+			rtctime: ko.observable(),
+
+			lockposition: ko.observable()
+		};
+
 		var onDeviceReady = function () {
+
+			app.rtctime = ko.observable();
 
 			pager.extendWithPage(HomeViewModel);
 			ko.applyBindings(HomeViewModel);

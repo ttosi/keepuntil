@@ -67,33 +67,26 @@ void setup()
 
 void loop()
 {
-	bluetoothSerial.println("hello!!!");
-
-	while (1);
-	
 	if (bluetoothSerial.available())
 	{
 		String buffer = bluetoothSerial.readString();
 
 		Serial.println(buffer);
 
-		if (buffer == "on")
+		if (buffer == "getrtctime")
 		{
-			digitalWrite(DEBUG_LED, HIGH);
-			bluetoothSerial.println('ON');
+			String jsonData = "{\"key\":\"rtctime\",\"value\":\"March 14, 2016 10:10 AM\"}";
+			bluetoothSerial.println(jsonData);
 		}
 
 		if (buffer == "off")
 		{
 			digitalWrite(DEBUG_LED, LOW);
-			bluetoothSerial.println('OFF');
-		}
-
-		if (buffer == "gettime")
-		{
-			bluetoothSerial.println("time|" + getTimeString());
+			bluetoothSerial.println("OFF");
 		}
 	}
+
+	delay(10);
 	
 	//if (openAtTime <= getRtcTime())
 	//{
