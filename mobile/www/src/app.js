@@ -53,10 +53,10 @@ require([
 	function (ko, pager, fastclick, HomeViewModel) {
 		'use strict';
 
-		app.box = {
-			oattime: ko.observable(),
+		app.keepuntil = {
+			rtc: ko.observable(),
 
-			rtctime: ko.observable(),
+			oat: ko.observable(),
 
 			lockposition: ko.observable()
 		};

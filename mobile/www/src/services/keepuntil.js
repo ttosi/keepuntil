@@ -1,23 +1,29 @@
 ﻿define([
 	'jquery',
-	'lodash'],
+	'lodash',
+	'sugar'],
 	function ($, _) {
-		var _subscription = function (data) {
-			var command = data.split('|')[0],
-				payload = data.split('|')[1].trim();
+		'use strict';
 
-			switch (command) {
-				case 'rtctime':
-					app.rtctime(payload);
+		var _subscription = function (data) {
+			data = JSON.parse(data);
+
+			if (data.key === 'rtc' || data.key === 'oat') {
+				data.value = Date.create(parseFloat(data.value + '999')); //figure out why 999...
+			}
+
+			switch (data.key) {
+				case 'rtc':
+					app.keepuntil.rtc(data.value.format());
 					break;
-				case 'oattime':
-					app.box.oattime(payload);
+				case 'oat':
+					app.keepuntil.oat(data.value.format());
 					break;
 				case 'lockposition':
-					app.box.lockposition(payload);
+					app.keepuntil.lockPosition(data.value);
 					break;
 				default:
-					console.log('Invalid command recieved: ' + command);
+					console.error('invalid data recieved: ' + data);
 					break;
 			}
 		};
@@ -35,6 +41,7 @@
 						bluetoothSerial.connect(
 							keepuntil.address,
 							function () {
+								bluetoothSerial.subscribe('\n', _subscription);
 								deferred.resolve(true);
 							},
 							function (err) {
@@ -50,19 +57,19 @@
 				return deferred.promise();
 			},
 
-			getRtcTime: function() {
-				bluetoothSerial.write('getrtctime');
+			getRtc: function () {
+				bluetoothSerial.write('getrtc');
 			},
 
-			setRtcTime: {
-
-			},
-
-			getOatTime: {
+			setRtc: function() {
 
 			},
 
-			setOatTime: {
+			getOat: function() {
+				bluetoothSerial.write('getoat');
+			},
+
+			setOat: function() {
 
 			},
 

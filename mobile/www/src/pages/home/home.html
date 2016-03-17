@@ -11,15 +11,19 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-12 oat-container">
-			<button class="btn btn-primary btn-lg" style="width: 90%" data-bind="click: click">
+			<button class="btn btn-primary btn-lg" style="width: 90%" data-bind="click: setOat">
 				SET OPEN AT TIME
 			</button>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-xs-12" style="text-align: center; margin-top: 10px;">
-			Current Time of the KeepUntil Box
-			<div data-bind="text: rtcTime" style="font-size: 22pt; color: #000;"></div>
+			Your KeepUntil Box will open at
+			<div data-bind="text: app.keepuntil.oat" style="font-size: 22pt; color: #000;"></div>
+		</div>
+		<div class="col-xs-12" style="text-align: center; margin-top: 10px;">
+			Current time of the KeepUntil Box
+			<div data-bind="text: app.keepuntil.rtc" style="font-size: 22pt; color: #000;"></div>
 		</div>
 	</div>
 </div>

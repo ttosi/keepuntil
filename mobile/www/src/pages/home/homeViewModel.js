@@ -1,9 +1,10 @@
 ﻿define([
 	'knockout',
 	'lodash',
-	'services/bluetooth',
-	'services/utils'],
-	function (ko, _, bluetooth, utils) {
+	'services/keepuntil',
+	'services/utils',
+	'sugar'],
+	function (ko, _, keepuntil, utils) {
 		'use strict';
 
 		var viewModel = function (ko, utils) {
@@ -17,19 +18,23 @@
 
 			self.lockPosition = ko.observable();
 
-			self.click = function () {
+			self.setOat = function () {
+				keepuntil.getOat()
 				console.log('clicked');
 			};
 
-			self.deviceStatus = ko.observable('NOTCONNECTED'); // NOTCONNECTED, CONNECTED, BLUETOOTHOFF, NOTFOUND
+			self.bluetoothStatus = ko.observable('NOTCONNECTED'); // NOTCONNECTED, CONNECTED, BLUETOOTHOFF, NOTFOUND
 
 			self.connect = function () {
 				utils.waitDialog.show('Connecting to your KeepUntil Box...');
 
-				bluetooth.connect()
+				keepuntil.connect()
 					.done(function () {
-						bluetoothSerial.subscribe('\n', self.subscription);
-						bluetooth.getRtcTime();
+						keepuntil.getRtc();
+
+						setTimeout(function () {
+							keepuntil.getOat()
+						}, 1500);
 
 						self.isConnected(true);
 					})
@@ -40,26 +45,7 @@
 						utils.waitDialog.dismiss();
 					});
 			};
-
-			self.subscription = function (data) {
-				data = JSON.parse(data);
-
-				switch (data.key) {
-					case 'rtctime':
-						self.rtcTime(data.value);
-						break;
-					case 'oattime':
-						self.oatTime(data.value);
-						break;
-					case 'lockposition':
-						self.lockPosition(data.value);
-						break;
-					default:
-						console.log('Invalid data recieved: ' + data);
-						break;
-				}
-			};
-		
+					
 			//function onDatePicked(date) {
 			//	pickedDate = date;
 

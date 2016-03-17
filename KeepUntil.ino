@@ -8,18 +8,14 @@
 #define SHOW_TIME false
 
 const byte LOCK_SERVO_PIN = 4;
-const byte LOCK_OPEN = 130;
-const byte LOCK_CLOSED = 90;
+const byte LOCK_OPEN = 110;
+const byte LOCK_CLOSED = 20;
 
-const byte LOCKING_SOLENOID_PIN = 3;
-
-const byte IS_OPEN_ADDRESS = 0;			//eeprom address to store the lock state
-const byte OPEN_AT_TIME_ADDRESS = 1;	//eeprom address to store the open at time
+const byte OAT_ADDRESS = 1;	//eeprom address to store the open at time
 
 const byte DEBUG_LED = 2;
 
-long openAtTime = EEPROMReadlong(OPEN_AT_TIME_ADDRESS);
-bool isOpen = EEPROM.read(IS_OPEN_ADDRESS) == 1 ? true : false;
+long openAtTime = EEPROMReadlong(OAT_ADDRESS);
 int waitToCloseLockDuration = 10 * 1000;
 
 SoftwareSerial bluetoothSerial(3, 4); //RX, TX
@@ -41,12 +37,12 @@ void setup()
 		delay(50);
 	}
 
+	//EEPROMWritelong(OAT_ADDRESS, 1458162000);
+
 	rtc.begin();
 
-	//EEPROM.write(IS_OPEN_ADDRESS, 0);
-
-	// day, month, year, 24 hour, minute, second
-	if (SET_RTC) setRtc(12, 1, 2016, 20, 42, 15);
+	// day, month, year, 24 hour, minute, second (UTC!)
+	if (SET_RTC) setRtc(17, 3, 2016, 7, 40, 30);
 
 	if (SET_RTC || SHOW_TIME)
 	{
@@ -57,32 +53,38 @@ void setup()
 		}
 	}
 
-	/*pinMode(LOCKING_SOLENOID_PIN, OUTPUT);
+	openAtTime = EEPROMReadlong(OAT_ADDRESS);
 
-	openAtTime = EEPROMReadlong(OPEN_AT_TIME_ADDRESS);
-	isOpen = EEPROM.read(IS_OPEN_ADDRESS) == 1 ? true : false;
-
-	if (DEBUG) printDebugInfo();*/
+	if (DEBUG) printDebugInfo();
 }
 
 void loop()
 {
 	if (bluetoothSerial.available())
 	{
-		String buffer = bluetoothSerial.readString();
+		String request = bluetoothSerial.readString();
 
-		Serial.println(buffer);
+		Serial.println(request);
 
-		if (buffer == "getrtctime")
+		if (request == "getrtc")
 		{
-			String jsonData = "{\"key\":\"rtctime\",\"value\":\"March 14, 2016 10:10 AM\"}";
-			bluetoothSerial.println(jsonData);
+			bluetoothSerial.println(
+				formatJsonString("rtc", (String)rtc.getUnixTime(rtc.getTime()))
+			);
 		}
-
-		if (buffer == "off")
+		else if (request == "getoat")
 		{
-			digitalWrite(DEBUG_LED, LOW);
-			bluetoothSerial.println("OFF");
+			bluetoothSerial.println(
+				formatJsonString("oat", (String)EEPROMReadlong(OAT_ADDRESS))
+			);
+		}
+		else if (request == "setrtc")
+		{
+
+		}
+		else if (request == "setoat")
+		{
+
 		}
 	}
 
@@ -101,9 +103,6 @@ void loop()
 	//{
 	//	if (isOpen)
 	//	{
-	//		//lcdSerial.write(18);
-	//		//lcdSerial.write(21);
-
 	//		lockControl("closed");
 	//	}
 	//}
@@ -113,117 +112,47 @@ void loop()
 	//delay(1000);
 }
 
-/*
 void setOpenAtTime()
 {
-	lcdSerial.write(24);
-	delay(50);
-
-	lcdSerial.write(12);
-	lcdSerial.write(17);
-	delay(5);
-
-	Time now;
-	now = rtc.getTime();
-
 	Time t;
-	t.mon = getInput("Month: ", String(now.mon));
-	t.date = getInput("Day: ", String(now.date));
-	t.year = getInput("Year: ", String(now.year));
-	t.hour = getInput("Hour (24hr): ", String(now.hour));
-	t.min = getInput("Minute: ", String(now.min));
-	t.sec = 0;
-
-	lcdSerial.write(12);
-	delay(5);
-
-	if (DEBUG) Serial.println(rtc.getUnixTime(t));
-
-	lcdSerial.print(String(t.mon) + "/" +
-		String(t.date) + "/" +
-		String(t.year) + " " +
-		String(t.hour) + ":" +
-		String(t.min));
-
-	lcdSerial.write(13);
-	lcdSerial.write("1-Yes, 2-No");
-
-	char confirm = keypad.waitForKey();
-
-	if (confirm == '1')
-	{
-		lcdSerial.write(12);
-		delay(5);
-		lcdSerial.write("You have ");
-		lcdSerial.write(waitToCloseLockDuration / 10);
-		lcdSerial.write(" sec");
-		lcdSerial.write(13);
-		lcdSerial.write("to close the lid");
-	}
-	else
-	{
-		setOpenAtTime();
-	}
 
 	openAtTime = rtc.getUnixTime(t);
 
-	EEPROMWritelong(OPEN_AT_TIME_ADDRESS, openAtTime);
+	EEPROMWritelong(OAT_ADDRESS, openAtTime);
 
 	delay(waitToCloseLockDuration);
 }
-*/
 
-/*
-int getInput(String label, String defaultValue)
+String readBluetoothRequest()
 {
-	lcdSerial.write(12);
-	delay(50);
-
-	char input[5];
-	byte pos = defaultValue.length();
-
-	defaultValue.toCharArray(input, defaultValue.length() + 1);
-
-	lcdSerial.print(label);
-	lcdSerial.print(defaultValue);
-
-	while (true)
+	String request;
+	if (bluetoothSerial.available())
 	{
-		char key = keypad.waitForKey();
-
-		if (key != NO_KEY && validKeys.indexOf(key) != -1)
-		{
-			if (key == 'D')
-			{
-				return atol(input);
-			}
-			else if (key == 'C')
-			{
-				input[pos] = char(0);
-
-				if (pos != 0)
-				{
-					pos--;
-					lcdSerial.write(0x08);
-				}
-			}
-			else
-			{
-				lcdSerial.write(key);
-				input[pos] = key;
-				pos++;
-			}
-		}
+		request = bluetoothSerial.readString();
 	}
+
+	return request;
 }
-*/
+
+void sendBluetoothResponse(String response)
+{
+
+}
+
+String formatJsonString(String key, String value)
+{
+	return "{\"key\":\""+ key + "\",\"value\":\"" + value + "\"}";
+}
+
+bool lockPosition()
+{
+
+}
 
 void lockControl(String position)
 {
 	if (position == "closed")
 	{
-		digitalWrite(LOCKING_SOLENOID_PIN, HIGH);
-
 		delay(500);
 
 		lockServo.write(LOCK_CLOSED);
@@ -231,21 +160,14 @@ void lockControl(String position)
 
 		delay(500);
 
-		digitalWrite(LOCKING_SOLENOID_PIN, LOW);
-
 		byte servoPos = lockServo.read();
 		if (servoPos != LOCK_CLOSED)
 		{
 			lockControl("closed");
 		}
-
-		EEPROM.write(IS_OPEN_ADDRESS, 0);
-		isOpen = false;
 	}
 	else if (position == "open")
 	{
-		digitalWrite(LOCKING_SOLENOID_PIN, HIGH);
-
 		delay(500);
 
 		lockServo.write(LOCK_OPEN);
@@ -253,16 +175,11 @@ void lockControl(String position)
 
 		delay(500);
 
-		digitalWrite(LOCKING_SOLENOID_PIN, LOW);
-
 		byte servoPos = lockServo.read();
 		if (servoPos != LOCK_OPEN)
 		{
 			lockControl("open");
 		}
-
-		EEPROM.write(IS_OPEN_ADDRESS, 1);
-		isOpen = true;
 	}
 
 	delay(500);
@@ -308,8 +225,6 @@ void printDebugInfo()
 	Serial.println(openAtTime);
 	Serial.print("second remain:\t");
 	Serial.println(openAtTime - getRtcTime());
-	Serial.print("is open flag:\t");
-	Serial.println(isOpen);
 }
 
 // ATTRIBUTION:
