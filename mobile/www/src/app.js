@@ -1,6 +1,6 @@
 require.config({
 	baseUrl: 'src/',
-	waitSeconds: 0,
+	waitSeconds: 20,
 	paths: {
 		jquery: 'lib/jquery',
 		knockout: 'lib/knockout',
@@ -58,13 +58,12 @@ require([
 
 			oat: ko.observable(),
 
+			oatText: ko.observable(),
+
 			lockposition: ko.observable()
 		};
 
 		var onDeviceReady = function () {
-
-			app.rtctime = ko.observable();
-
 			pager.extendWithPage(HomeViewModel);
 			ko.applyBindings(HomeViewModel);
 

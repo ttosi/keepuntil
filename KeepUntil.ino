@@ -3,7 +3,7 @@
 #include <DS3231.h>
 #include <SoftwareSerial.h>
 
-#define DEBUG true
+#define DEBUG false
 #define SET_RTC false
 #define SHOW_TIME false
 
@@ -11,7 +11,7 @@ const byte LOCK_SERVO_PIN = 4;
 const byte LOCK_OPEN = 110;
 const byte LOCK_CLOSED = 20;
 
-const byte OAT_ADDRESS = 1;	//eeprom address to store the open at time
+const byte OAT_ADDRESS = 0;	//eeprom address to store the open at time
 
 const byte DEBUG_LED = 2;
 
@@ -26,10 +26,7 @@ void setup()
 {
 	pinMode(DEBUG_LED, OUTPUT);
 
-	if (DEBUG)
-	{
-		Serial.begin(9600);
-	}
+	if (DEBUG)	Serial.begin(9600);
 
 	bluetoothSerial.begin(9600);
 	while (!bluetoothSerial)
@@ -37,12 +34,10 @@ void setup()
 		delay(50);
 	}
 
-	//EEPROMWritelong(OAT_ADDRESS, 1458162000);
-
 	rtc.begin();
 
 	// day, month, year, 24 hour, minute, second (UTC!)
-	if (SET_RTC) setRtc(17, 3, 2016, 7, 40, 30);
+	//if (SET_RTC) setRtc(17, 3, 2016, 7, 40, 30);
 
 	if (SET_RTC || SHOW_TIME)
 	{
@@ -64,32 +59,36 @@ void loop()
 	{
 		String request = bluetoothSerial.readString();
 
-		Serial.println(request);
+		if (DEBUG)
+		{
+			Serial.print("request > ");
+			Serial.println(request);
+		}
 
 		if (request == "getrtc")
 		{
 			bluetoothSerial.println(
 				formatJsonString("rtc", (String)rtc.getUnixTime(rtc.getTime()))
-			);
+				);
 		}
 		else if (request == "getoat")
 		{
 			bluetoothSerial.println(
 				formatJsonString("oat", (String)EEPROMReadlong(OAT_ADDRESS))
-			);
+				);
 		}
-		else if (request == "setrtc")
+		else if (request.startsWith("setrtc"))
 		{
-
+			setRtc(request.substring(request.indexOf(':') + 1));
 		}
-		else if (request == "setoat")
+		else if (request.startsWith("setoat"))
 		{
-
+			setOpenAtTime(request.substring(request.indexOf(':') + 1));
 		}
 	}
 
 	delay(10);
-	
+
 	//if (openAtTime <= getRtcTime())
 	//{
 	//	if (!isOpen)
@@ -112,15 +111,14 @@ void loop()
 	//delay(1000);
 }
 
-void setOpenAtTime()
+void setOpenAtTime(String oat)
 {
-	Time t;
+	char oatBuffer[10];
+	oat.toCharArray(oatBuffer, oat.length() + 1);
 
-	openAtTime = rtc.getUnixTime(t);
+	EEPROMWritelong(OAT_ADDRESS, atol(oatBuffer));
 
-	EEPROMWritelong(OAT_ADDRESS, openAtTime);
-
-	delay(waitToCloseLockDuration);
+	if (DEBUG) printDebugInfo();
 }
 
 String readBluetoothRequest()
@@ -134,17 +132,12 @@ String readBluetoothRequest()
 	return request;
 }
 
-void sendBluetoothResponse(String response)
-{
-
-}
-
 String formatJsonString(String key, String value)
 {
-	return "{\"key\":\""+ key + "\",\"value\":\"" + value + "\"}";
+	return "{\"key\":\"" + key + "\",\"value\":\"" + value + "\"}";
 }
 
-bool lockPosition()
+bool lockPosition() //true - closed, false - open
 {
 
 }
@@ -191,10 +184,25 @@ long getRtcTime()
 	return rtc.getUnixTime(rtc.getTime());
 }
 
-void setRtc(int day, int month, int year, int hour, int minute, int second)
+void setRtc(String rtcTime)
 {
-	rtc.setTime(hour, minute, second);
-	rtc.setDate(day, month, year);
+	char rtcBuffer[19];
+	char * rtcParts;
+
+	rtcTime.toCharArray(rtcBuffer, rtcTime.length());
+
+	uint8_t day = (uint8_t)atol(strtok(rtcBuffer, "|"));
+	uint8_t mon = (uint8_t)atol(strtok(NULL, "|"));
+	uint8_t year = (uint8_t)atol(strtok(NULL, "|"));
+	uint8_t hour = (uint8_t)atol(strtok(NULL, "|"));
+	uint8_t min = (uint8_t)atol(strtok(NULL, "|"));
+	uint8_t sec = (uint8_t)atol(strtok(NULL, "|"));
+
+	rtc.setDate(day, mon, year + 2000);
+
+	rtc.setTime(hour, min, sec + 2);
+
+	if (DEBUG) printDebugInfo();
 }
 
 void printTimeString()
@@ -207,7 +215,7 @@ void printTimeString()
 String getTimeString()
 {
 	String time;
-	
+
 	time += rtc.getDateStr();
 	time += " ";
 	time += rtc.getTimeStr();
@@ -217,14 +225,18 @@ String getTimeString()
 
 void printDebugInfo()
 {
+	long oat = EEPROMReadlong(OAT_ADDRESS);
+
+	Serial.println("---------------------");
 	Serial.print("rtc time:\t");
 	printTimeString();
 	Serial.print("rtc unix time:\t");
 	Serial.println(getRtcTime());
 	Serial.print("oat:\t\t");
-	Serial.println(openAtTime);
+	Serial.println(oat);
 	Serial.print("second remain:\t");
-	Serial.println(openAtTime - getRtcTime());
+	Serial.println(oat - getRtcTime());
+	Serial.println("---------------------");
 }
 
 // ATTRIBUTION:

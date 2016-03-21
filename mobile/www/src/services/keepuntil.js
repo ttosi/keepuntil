@@ -9,7 +9,7 @@
 			data = JSON.parse(data);
 
 			if (data.key === 'rtc' || data.key === 'oat') {
-				data.value = Date.create(parseFloat(data.value + '999')); //figure out why 999...
+				data.value = Date.create(parseFloat(data.value * 1000));
 			}
 
 			switch (data.key) {
@@ -17,7 +17,7 @@
 					app.keepuntil.rtc(data.value.format());
 					break;
 				case 'oat':
-					app.keepuntil.oat(data.value.format());
+					app.keepuntil.oat(Date.create(data.value));
 					break;
 				case 'lockposition':
 					app.keepuntil.lockPosition(data.value);
@@ -59,18 +59,27 @@
 
 			getRtc: function () {
 				bluetoothSerial.write('getrtc');
+
+				setInterval(function () {
+					bluetoothSerial.write('getrtc');
+				}, 60000);
 			},
 
-			setRtc: function() {
+			setRtc: function () {
+				var rtcDate = Date.create();
 
+				bluetoothSerial.write('setrtc:' +
+					new Date().utc(true).format('{dd}|{MM}|{yy}|{HH}|{mm}|{s}0')
+				);
 			},
 
-			getOat: function() {
+			getOat: function () {
 				bluetoothSerial.write('getoat');
 			},
 
-			setOat: function() {
-
+			setOat: function (oat) {
+				console.log(Math.floor(oat.getTime() / 1000));
+				bluetoothSerial.write('setoat:' + Math.floor(oat.getTime() / 1000));
 			},
 
 			getLockPosition: {

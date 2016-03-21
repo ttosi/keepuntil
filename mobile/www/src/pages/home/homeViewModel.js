@@ -12,56 +12,50 @@
 
 			self.isConnected = ko.observable(false);
 
-			self.rtcTime = ko.observable();
-
-			self.oatTime = ko.observable();
-
-			self.lockPosition = ko.observable();
+			self.oatText = ko.observable();
 
 			self.setOat = function () {
-				keepuntil.getOat()
-				console.log('clicked');
-			};
+				var date;
 
-			self.bluetoothStatus = ko.observable('NOTCONNECTED'); // NOTCONNECTED, CONNECTED, BLUETOOTHOFF, NOTFOUND
+				datePicker.show({ date: new Date(), mode: 'date' }, function (pickedDate) {
+					date = pickedDate;
+
+					datePicker.show({ date: new Date(), mode: 'time' }, function (time) {
+						var oat = Date.create(
+							date.format('{M}-{d}-{yyyy}') + ' ' +
+							time.format('{H}:{mm}')
+						);
+
+						keepuntil.setOat(oat);
+
+					});
+				});
+			}
 
 			self.connect = function () {
 				utils.waitDialog.show('Connecting to your KeepUntil Box...');
 
 				keepuntil.connect()
 					.done(function () {
-						keepuntil.getRtc();
+						keepuntil.getOat();
 
 						setTimeout(function () {
-							keepuntil.getOat()
+							keepuntil.setRtc();
+
+							setTimeout(function () {
+								keepuntil.getRtc();
+							}, 1500);
 						}, 1500);
 
 						self.isConnected(true);
+
+						utils.waitDialog.dismiss();
 					})
 					.fail(function (error) {
-						alert(error);
-					})
-					.always(function () {
 						utils.waitDialog.dismiss();
+						alert(error);
 					});
 			};
-					
-			//function onDatePicked(date) {
-			//	pickedDate = date;
-
-			//	datePicker.show({
-			//		date: new Date(),
-			//		mode: 'time',
-			//		is24HourView: false,
-			//		androidTheme: 'THEME_HOLO_LIGHT'
-			//	}, onTimePicked, onError);
-			//}
-
-			//datePicker.show({
-			//	date: new Date(),
-			//	mode: 'date',
-			//	androidTheme: 'THEME_HOLO_DARK'
-			//}, onDatePicked, onError);
 
 			self.connect();
 		};

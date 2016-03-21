@@ -1,11 +1,12 @@
 body {
-    font-family: 'PT Sans Narrow', sans-serif;
-    padding-top: 50px;
+	 font-family: 'PT Sans Narrow', sans-serif;
+	 padding-top: 50px;
+	 color: #000;
 }
 
 .app {
 }
 
 .navbar-brand {
-    font-weight: bold;
+	 font-weight: bold;
 }
