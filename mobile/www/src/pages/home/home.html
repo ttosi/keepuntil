@@ -1,29 +1,34 @@
-﻿<div class="container">
-	<div class="row" data-bind="visible: isConnected()">
-		<div class="col-xs-12 box-status">
-			<div class="status-text">
-				YOUR KEEPUNTIL BOX IS
-			</div>
-			<div class="box-status-text" style="margin-top: 0; background-color: #006622; padding: 15px; border-radius: 6px; color: #fff">
-				OPEN
-			</div>
+﻿<div class="container" data-bind="visible: isConnected()">
+	<div class="row">
+		<div class="col-xs-12 status-text">
+			YOUR KEEPUNTIL BOX IS
 		</div>
 	</div>
 	<div class="row">
+		<div class="col-xs-12 status-container" data-bind="style: { 'background-color': isOatPast() ? '#006622' : '#990000' }">
+			<!-- ko if: isOatPast() -->
+				OPEN
+			<!-- /ko -->
+			<!-- ko if: !isOatPast() -->
+				LOCKED
+			<!-- /ko -->
+		</div>
+	</div>
+	<div class="row" data-bind="visible: !isOatPast()">
+		<div class="col-xs-12" style="text-align: center;">
+			It will open on
+			<div data-bind="text: oatFormatted" style="font-size: 22pt;"></div>
+			<div style="font-size: 18pt;">
+				<div>in</div>
+				<div data-bind="text: oatRemaining"></div>
+			</div>
+		</div>
+	</div>
+	<div class="row" data-bind="visible: isOatPast()">
 		<div class="col-xs-12 oat-container">
 			<button class="btn btn-primary btn-lg" style="width: 90%" data-bind="click: setOat">
 				SET OPEN AT TIME
 			</button>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12" style="text-align: center; margin-top: 10px;">
-			Your KeepUntil Box will open at
-			<div data-bind="text: app.keepuntil.oatText" style="font-size: 22pt;"></div>
-		</div>
-		<div class="col-xs-12" style="text-align: center; margin-top: 10px;">
-			Current KeepUntil Box Time (updated every minute)
-			<div data-bind="text: app.keepuntil.rtc" style="font-size: 22pt;"></div>
 		</div>
 	</div>
 </div>

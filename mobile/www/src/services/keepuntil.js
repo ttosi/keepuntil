@@ -8,16 +8,12 @@
 		var _subscription = function (data) {
 			data = JSON.parse(data);
 
-			if (data.key === 'rtc' || data.key === 'oat') {
-				data.value = Date.create(parseFloat(data.value * 1000));
-			}
-
 			switch (data.key) {
 				case 'rtc':
-					app.keepuntil.rtc(data.value.format());
+					app.keepuntil.rtc(Date.create(parseFloat(data.value * 1000)));
 					break;
 				case 'oat':
-					app.keepuntil.oat(Date.create(data.value));
+					app.keepuntil.oat(Date.create(parseFloat(data.value * 1000)));
 					break;
 				case 'lockposition':
 					app.keepuntil.lockPosition(data.value);
@@ -66,7 +62,7 @@
 			},
 
 			setRtc: function () {
-				var rtcDate = Date.create();
+				var rtcDate = Date.create().addSeconds(2);
 
 				bluetoothSerial.write('setrtc:' +
 					new Date().utc(true).format('{dd}|{MM}|{yy}|{HH}|{mm}|{s}0')
@@ -78,12 +74,12 @@
 			},
 
 			setOat: function (oat) {
-				console.log(Math.floor(oat.getTime() / 1000));
 				bluetoothSerial.write('setoat:' + Math.floor(oat.getTime() / 1000));
+				app.keepuntil.oat(oat);
 			},
 
-			getLockPosition: {
-
+			getLockPosition: function() {
+				//app.keepuntil.lockposition(true);
 			}
 		};
 	});

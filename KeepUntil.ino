@@ -3,20 +3,16 @@
 #include <DS3231.h>
 #include <SoftwareSerial.h>
 
-#define DEBUG false
+#define DEBUG true
 #define SET_RTC false
 #define SHOW_TIME false
 
 const byte LOCK_SERVO_PIN = 4;
 const byte LOCK_OPEN = 110;
 const byte LOCK_CLOSED = 20;
-
 const byte OAT_ADDRESS = 0;	//eeprom address to store the open at time
 
-const byte DEBUG_LED = 2;
-
-long openAtTime = EEPROMReadlong(OAT_ADDRESS);
-int waitToCloseLockDuration = 10 * 1000;
+long openAtTime;// = EEPROMReadlong(OAT_ADDRESS);
 
 SoftwareSerial bluetoothSerial(3, 4); //RX, TX
 DS3231 rtc(SDA, SCL);
@@ -24,8 +20,6 @@ Servo lockServo;
 
 void setup()
 {
-	pinMode(DEBUG_LED, OUTPUT);
-
 	if (DEBUG)	Serial.begin(9600);
 
 	bluetoothSerial.begin(9600);
@@ -50,7 +44,10 @@ void setup()
 
 	openAtTime = EEPROMReadlong(OAT_ADDRESS);
 
-	if (DEBUG) printDebugInfo();
+	/*Serial.print("OATTIME:");
+	Serial.println(openAtTime);*/
+
+	//if (DEBUG) printDebugInfo();
 }
 
 void loop()
@@ -115,10 +112,10 @@ void setOpenAtTime(String oat)
 {
 	char oatBuffer[10];
 	oat.toCharArray(oatBuffer, oat.length() + 1);
+	
+	openAtTime = atol(oatBuffer);
 
-	EEPROMWritelong(OAT_ADDRESS, atol(oatBuffer));
-
-	if (DEBUG) printDebugInfo();
+	EEPROMWritelong(OAT_ADDRESS, openAtTime);
 }
 
 String readBluetoothRequest()
@@ -225,17 +222,15 @@ String getTimeString()
 
 void printDebugInfo()
 {
-	long oat = EEPROMReadlong(OAT_ADDRESS);
-
 	Serial.println("---------------------");
 	Serial.print("rtc time:\t");
 	printTimeString();
 	Serial.print("rtc unix time:\t");
 	Serial.println(getRtcTime());
 	Serial.print("oat:\t\t");
-	Serial.println(oat);
+	Serial.println(openAtTime);
 	Serial.print("second remain:\t");
-	Serial.println(oat - getRtcTime());
+	Serial.println(openAtTime - getRtcTime());
 	Serial.println("---------------------");
 }
 

@@ -58,10 +58,13 @@ require([
 
 			oat: ko.observable(),
 
-			oatText: ko.observable(),
-
-			lockposition: ko.observable()
+			lockposition: ko.observable(true),
 		};
+
+		app.rtcFormatted = ko.computed(function () {
+			if (app.keepuntil.rtc())
+				return app.keepuntil.rtc().format();
+		});
 
 		var onDeviceReady = function () {
 			pager.extendWithPage(HomeViewModel);
@@ -71,6 +74,8 @@ require([
 			pager.start();
 
 			fastclick.attach(document.body);
+
+			self.
 
 			console.info('app initialized');
 		}

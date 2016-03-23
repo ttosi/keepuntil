@@ -29,6 +29,15 @@
 		</div>
 	</div>
 
+	<nav class="navbar navbar-default navbar-fixed-bottom">
+		<div class="container">
+			<div class="navbar-header" style="text-align: center">
+				Current KeepUntil Box Time (updated every minute)
+				<div data-bind="text: app.rtcFormatted" style="font-size: 22pt;"></div>
+			</div>
+		</div>
+	</nav>
+
 	<script src="cordova.js"></script>
 	<script src="src/lib/require.js" data-main="src/app.js"></script>
 </body>
