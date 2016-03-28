@@ -10,15 +10,16 @@
 		var viewModel = function (ko, utils) {
 			var self = this;
 
-			self.isConnected = ko.observable(false);
-
 			self.oatRemaining = ko.computed(function () {
 				if (app.keepuntil.oat()) {
 					var timeRemaining = '';
 					var now = new Date();
 
-					if (now.daysUntil(app.keepuntil.oat()))
-						timeRemaining += now.daysUntil(app.keepuntil.oat()) + 'd ';
+					if (now.yearsUntil(app.keepuntil.oat()) - 1 > 0)
+						timeRemaining += now.yearsUntil(app.keepuntil.oat()) - 1 + 'y ';
+
+					if (Math.floor(now.daysUntil(app.keepuntil.oat()) % 365) > 1)
+						timeRemaining += Math.floor(now.daysUntil(app.keepuntil.oat()) % 365) - 1 + 'd ';
 
 					if (Math.floor(now.hoursUntil(app.keepuntil.oat()) % 24))
 						timeRemaining += Math.floor(now.hoursUntil(app.keepuntil.oat()) % 24) + 'h ';
@@ -26,8 +27,8 @@
 					if (Math.floor(now.minutesUntil(app.keepuntil.oat()) % 60))
 						timeRemaining += Math.floor(now.minutesUntil(app.keepuntil.oat()) % 60) + 'm ';
 
-					if (Math.floor(now.secondsUntil(app.keepuntil.oat()) % 60))
-						timeRemaining += Math.floor(now.secondsUntil(app.keepuntil.oat()) % 60) + 's ';
+					var seconds = Math.floor(now.secondsUntil(app.keepuntil.oat()) % 60);
+					timeRemaining += (seconds < 10 ? '0' + seconds : seconds) + 's ';
 
 					return timeRemaining;
 				}
@@ -41,24 +42,31 @@
 
 			self.oatFormatted = ko.computed(function () {
 				if (app.keepuntil.oat())
-					return app.keepuntil.oat().format();
+					return app.keepuntil.oat().format('{Month} {d}, {yyyy} at {h}:{mm}{tt}');
 			});
+
+			self.resetOat = function () {
+				keepuntil.setOat(Date.create());
+			};
 
 			self.setOat = function () {
 				var date;
 
 				datePicker.show({ date: new Date(), mode: 'date' }, function (pickedDate) {
-					date = pickedDate;
+					if (pickedDate) {
+						date = pickedDate;
 
-					datePicker.show({ date: new Date(), mode: 'time' }, function (time) {
-						var oat = Date.create(
-							date.format('{M}-{d}-{yyyy}') + ' ' +
-							time.format('{H}:{mm}')
-						);
+						datePicker.show({ date: new Date(), mode: 'time' }, function (time) {
+							if (time) {
+								var oat = Date.create(
+									date.format('{M}-{d}-{yyyy}') + ' ' +
+									time.format('{H}:{mm}:00')
+								);
 
-						keepuntil.setOat(oat);
-
-					});
+								keepuntil.setOat(oat);
+							}
+						});
+					}
 				});
 			}
 
@@ -70,9 +78,16 @@
 						keepuntil.getOat();
 
 						setTimeout(function () {
+							keepuntil.setRtc()
+								.done(function (date) {
+									console.log(date);
+								});
+						}, 3000);
+
+						setTimeout(function () {
 							keepuntil.getRtc();
 
-							self.isConnected(true);
+							app.keepuntil.connected(true);
 							utils.waitDialog.dismiss();
 						}, 1500);
 					})
@@ -84,11 +99,9 @@
 
 			self.connect();
 
-			//if (app.keepuntil.oat()) {
-				setInterval(function () {
-					app.keepuntil.oat.notifySubscribers();
-				}, 1000);
-			//}
+			setInterval(function () {
+				app.keepuntil.oat.notifySubscribers();
+			}, 1000);
 		};
 
 		return {

@@ -1,4 +1,4 @@
-﻿<div class="container" data-bind="visible: isConnected()">
+﻿<div class="container">
 	<div class="row">
 		<div class="col-xs-12 status-text">
 			YOUR KEEPUNTIL BOX IS
@@ -16,7 +16,7 @@
 	</div>
 	<div class="row" data-bind="visible: !isOatPast()">
 		<div class="col-xs-12" style="text-align: center;">
-			It will open on
+			IT WILL OPEN ON
 			<div data-bind="text: oatFormatted" style="font-size: 22pt;"></div>
 			<div style="font-size: 18pt;">
 				<div>in</div>
@@ -28,6 +28,13 @@
 		<div class="col-xs-12 oat-container">
 			<button class="btn btn-primary btn-lg" style="width: 90%" data-bind="click: setOat">
 				SET OPEN AT TIME
+			</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 oat-container">
+			<button class="btn btn-primary btn-lg" style="width: 90%" data-bind="click: resetOat">
+				reset oat
 			</button>
 		</div>
 	</div>

@@ -5,7 +5,7 @@
 	<meta name="format-detection" content="telephone=no" />
 	<meta name="msapplication-tap-highlight" content="no" />
 	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
-	<meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.gstatic.com;  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' http://www.timeapi.org/; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
 
 	<title>KeepUntil Box</title>
 
@@ -18,25 +18,27 @@
 	<link href="src/pages/home/home.css" rel="stylesheet" />
 </head>
 <body>
-	<siteheader></siteheader>
+	<div data-bind="visible: app.keepuntil.connected()">
+		<siteheader></siteheader>
 
-	<div class="app">
-		<div data-bind="page: {
+		<div class="app">
+			<div data-bind="page: {
 			id: 'home',
 			role: 'start',
 			sourceOnShow: 'src/pages/home/home.html',
 			withOnShow: app.load('pages/home/homeViewModel') }">
-		</div>
-	</div>
-
-	<nav class="navbar navbar-default navbar-fixed-bottom">
-		<div class="container">
-			<div class="navbar-header" style="text-align: center">
-				Current KeepUntil Box Time (updated every minute)
-				<div data-bind="text: app.rtcFormatted" style="font-size: 22pt;"></div>
 			</div>
 		</div>
-	</nav>
+
+		<nav class="navbar navbar-default navbar-fixed-bottom">
+			<div class="container">
+				<div class="navbar-header" style="text-align: center">
+					CURRENT KEEPUNTIL BOX TIME
+					<div data-bind="text: app.rtcFormatted" style="font-size: 22pt;"></div>
+				</div>
+			</div>
+		</nav>
+	</div>
 
 	<script src="cordova.js"></script>
 	<script src="src/lib/require.js" data-main="src/app.js"></script>

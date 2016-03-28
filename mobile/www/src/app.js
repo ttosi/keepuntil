@@ -39,6 +39,14 @@ var app = {
 				vm.afterShow();
 			});
 		};
+	},
+
+	pause: function () {
+		console.log('paused');
+	},
+
+	resume: function () {
+		console.log('resumed');
 	}
 };
 
@@ -59,6 +67,8 @@ require([
 			oat: ko.observable(),
 
 			lockposition: ko.observable(true),
+
+			connected: ko.observable(false)
 		};
 
 		app.rtcFormatted = ko.computed(function () {
@@ -66,7 +76,7 @@ require([
 				return app.keepuntil.rtc().format();
 		});
 
-		var onDeviceReady = function () {
+		var deviceready = function () {
 			pager.extendWithPage(HomeViewModel);
 			ko.applyBindings(HomeViewModel);
 
@@ -75,10 +85,12 @@ require([
 
 			fastclick.attach(document.body);
 
-			self.
-
 			console.info('app initialized');
 		}
 
-		document.addEventListener('deviceready', onDeviceReady, false);
+		document.addEventListener('deviceready', deviceready, false);
+
+		document.addEventListener('pause', app.pause);
+
+		document.addEventListener('resume', app.resume);
 	});

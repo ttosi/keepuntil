@@ -62,11 +62,14 @@
 			},
 
 			setRtc: function () {
-				var rtcDate = Date.create().addSeconds(2);
+				return $.get('http://www.timeapi.org/utc/now', function (date) {
+					var utcNow = Date.create(date).addSeconds(2);
+					console.log(utcNow.utc(true).format('{dd}|{MM}|{yy}|{HH}|{mm}|{ss}0'));
 
-				bluetoothSerial.write('setrtc:' +
-					new Date().utc(true).format('{dd}|{MM}|{yy}|{HH}|{mm}|{s}0')
-				);
+					bluetoothSerial.write('setrtc:' +
+						utcNow.utc(true).format('{dd}|{MM}|{yy}|{HH}|{mm}|{ss}0')
+					)
+				});
 			},
 
 			getOat: function () {
@@ -74,12 +77,15 @@
 			},
 
 			setOat: function (oat) {
+				var self = this;
+
 				bluetoothSerial.write('setoat:' + Math.floor(oat.getTime() / 1000));
-				app.keepuntil.oat(oat);
+				setTimeout(function () {
+					self.getOat();
+				}, 1500);
 			},
 
-			getLockPosition: function() {
-				//app.keepuntil.lockposition(true);
+			getLockPosition: function () {
 			}
 		};
 	});

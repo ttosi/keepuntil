@@ -7,12 +7,14 @@
 #define SET_RTC false
 #define SHOW_TIME false
 
-const byte LOCK_SERVO_PIN = 4;
+const byte LOCK_SERVO_PIN = A3;
 const byte LOCK_OPEN = 110;
-const byte LOCK_CLOSED = 20;
-const byte OAT_ADDRESS = 0;	//eeprom address to store the open at time
+const byte LOCK_LOCKED = 20;
+const byte LOCK_POSITION = 0;  //address to store the open at time
+const byte OAT_ADDRESS = 1;  //address to store the open at time
 
-long openAtTime;// = EEPROMReadlong(OAT_ADDRESS);
+long openAtTime;
+bool isLocked; // true = locked, false = open
 
 SoftwareSerial bluetoothSerial(3, 4); //RX, TX
 DS3231 rtc(SDA, SCL);
@@ -32,6 +34,7 @@ void setup()
 
 	// day, month, year, 24 hour, minute, second (UTC!)
 	//if (SET_RTC) setRtc(17, 3, 2016, 7, 40, 30);
+	//EEPROM.write(LOCK_POSITION, 0);
 
 	if (SET_RTC || SHOW_TIME)
 	{
@@ -42,23 +45,49 @@ void setup()
 		}
 	}
 
+	isLocked = (bool)EEPROM.read(LOCK_POSITION);
+	Serial.print("position: ");
+	Serial.println(isLocked);
+
 	openAtTime = EEPROMReadlong(OAT_ADDRESS);
 
-	/*Serial.print("OATTIME:");
-	Serial.println(openAtTime);*/
-
-	//if (DEBUG) printDebugInfo();
+	if (DEBUG) printDebugInfo();
+	if (DEBUG) Serial.println("Initialized");
 }
 
 void loop()
 {
+	if (openAtTime <= getRtcTime()) // should be open
+	{
+		if (isLocked)
+		{
+			lockControl("open");
+			if (DEBUG)
+			{
+				Serial.println("opened at");
+				printTimeString();
+			}
+		}
+	}
+	else // should be locked
+	{
+		if (!isLocked)
+		{
+			lockControl("lock");
+			if (DEBUG)
+			{
+				Serial.println("locaked at");
+				printTimeString();
+			}
+		}
+	}
+
 	if (bluetoothSerial.available())
 	{
 		String request = bluetoothSerial.readString();
 
 		if (DEBUG)
 		{
-			Serial.print("request > ");
 			Serial.println(request);
 		}
 
@@ -71,49 +100,32 @@ void loop()
 		else if (request == "getoat")
 		{
 			bluetoothSerial.println(
-				formatJsonString("oat", (String)EEPROMReadlong(OAT_ADDRESS))
+				formatJsonString("oat", (String)openAtTime)
 				);
 		}
 		else if (request.startsWith("setrtc"))
 		{
 			setRtc(request.substring(request.indexOf(':') + 1));
+			Serial.println(getTimeString());
 		}
 		else if (request.startsWith("setoat"))
 		{
 			setOpenAtTime(request.substring(request.indexOf(':') + 1));
+			if (DEBUG) printDebugInfo();
 		}
 	}
 
-	delay(10);
-
-	//if (openAtTime <= getRtcTime())
-	//{
-	//	if (!isOpen)
-	//	{
-	//		lockControl("open");
-	//	}
-
-	//	//setOpenAtTime();
-	//}
-	//else
-	//{
-	//	if (isOpen)
-	//	{
-	//		lockControl("closed");
-	//	}
-	//}
-
-	//if (DEBUG) printDebugInfo();
-
-	//delay(1000);
+	//delay(100);
 }
 
 void setOpenAtTime(String oat)
 {
-	char oatBuffer[10];
-	oat.toCharArray(oatBuffer, oat.length() + 1);
-	
-	openAtTime = atol(oatBuffer);
+	openAtTime = oat.toFloat();
+
+	Serial.print("--------oat string: ");
+	Serial.println(oat);
+	Serial.print("--------oat float: ");
+	Serial.println(oat.toFloat());
 
 	EEPROMWritelong(OAT_ADDRESS, openAtTime);
 }
@@ -134,45 +146,28 @@ String formatJsonString(String key, String value)
 	return "{\"key\":\"" + key + "\",\"value\":\"" + value + "\"}";
 }
 
-bool lockPosition() //true - closed, false - open
-{
-
-}
+//bool lockPosition() //true - locked, false - open
+//{
+//
+//}
 
 void lockControl(String position)
 {
-	if (position == "closed")
+	if (position == "lock")
 	{
-		delay(500);
-
-		lockServo.write(LOCK_CLOSED);
+		lockServo.write(LOCK_LOCKED);
 		lockServo.attach(LOCK_SERVO_PIN);
-
-		delay(500);
-
-		byte servoPos = lockServo.read();
-		if (servoPos != LOCK_CLOSED)
-		{
-			lockControl("closed");
-		}
+		EEPROM.write(LOCK_POSITION, true);
 	}
 	else if (position == "open")
 	{
-		delay(500);
-
 		lockServo.write(LOCK_OPEN);
 		lockServo.attach(LOCK_SERVO_PIN);
-
-		delay(500);
-
-		byte servoPos = lockServo.read();
-		if (servoPos != LOCK_OPEN)
-		{
-			lockControl("open");
-		}
+		EEPROM.write(LOCK_POSITION, false);
 	}
 
 	delay(500);
+	isLocked = (bool)EEPROM.read(LOCK_POSITION);
 	lockServo.detach();
 }
 
@@ -195,18 +190,17 @@ void setRtc(String rtcTime)
 	uint8_t min = (uint8_t)atol(strtok(NULL, "|"));
 	uint8_t sec = (uint8_t)atol(strtok(NULL, "|"));
 
-	rtc.setDate(day, mon, year + 2000);
+	rtc.setDate(day, mon, year);
 
-	rtc.setTime(hour, min, sec + 2);
-
-	if (DEBUG) printDebugInfo();
+	rtc.setTime(hour, min, sec);
 }
 
 void printTimeString()
 {
 	Serial.print(rtc.getDateStr());
 	Serial.print(" ");
-	Serial.println(rtc.getTimeStr());
+	Serial.print(rtc.getTimeStr());
+	Serial.println(" GMT");
 }
 
 String getTimeString()
@@ -231,6 +225,8 @@ void printDebugInfo()
 	Serial.println(openAtTime);
 	Serial.print("second remain:\t");
 	Serial.println(openAtTime - getRtcTime());
+	Serial.print("lock position:\t");
+	Serial.println(isLocked ? "locked" : "open");
 	Serial.println("---------------------");
 }
 
