@@ -8,6 +8,7 @@
 #define SHOW_TIME false
 
 const byte LOCK_SERVO_PIN = A3;
+const byte LOCK_FEEDBACK_PIN = A4; // future use
 const byte LOCK_OPEN = 100;
 const byte LOCK_LOCKED = 40;
 const byte OAT_ADDRESS = 0;  //address to store the open at time
@@ -69,11 +70,6 @@ void loop()
 		if (lockPosition == locked || lockPosition == unknown)
 		{
 			lockControl("open");
-			if (DEBUG)
-			{
-				Serial.println("opened at");
-				printTimeString();
-			}
 		}
 	}
 	else // should be locked
@@ -81,11 +77,6 @@ void loop()
 		if (lockPosition == open || lockPosition == unknown)
 		{
 			lockControl("lock");
-			if (DEBUG)
-			{
-				Serial.println("locked at");
-				printTimeString();
-			}
 		}
 	}
 
@@ -119,7 +110,6 @@ void loop()
 		{
 			// TODO: don't allow OAT to be
 			// set if box is in a locked state
-			
 			setOpenAtTime(request.substring(request.indexOf(':') + 1));
 			if (DEBUG) printDebugInfo();
 		}
