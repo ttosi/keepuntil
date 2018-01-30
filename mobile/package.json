@@ -1,21 +1,17 @@
 {
-  "name": "phonegap-template-hello-world",
+  "name": "keepuntil",
   "version": "1.0.0",
-  "description": "> A Hello World template built with PhoneGap",
+  "description": "A box that you can keep stuff away from yourself",
   "repository": {
     "type": "git",
-    "url": "https://github.com/phonegap/phonegap-app-hello-world.git"
+    "url": "https://github.com/ttosi/keepuntil.git"
   },
-  "author": "PhoneGap Team",
+  "author": "Tony S. Tosi",
   "license": "Apache-2.0.0",
   "keywords": [
     "ecosystem:phonegap",
     "ecosystem:cordova",
     "cordova:template",
     "phonegap:template"
-  ],
-  "bugs": {
-    "url": "https://github.com/phonegap/phonegap-app-hello-world/issues"
-  },
-  "homepage": "https://github.com/phonegap/phonegap-app-hello-world"
+  ]
 }
